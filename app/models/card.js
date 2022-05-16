@@ -14,6 +14,11 @@ module.exports = mongoose.model('Card', new Schema({
         required: [true, 'Please provide sport'],
         minlength: 1
       },
+      date: {
+        type: String,
+        required: [true, 'Please provide date'],
+        minlength:6
+      },
       comment: {
         type: String,
       },

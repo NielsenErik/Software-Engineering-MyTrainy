@@ -4,9 +4,8 @@ const app = express();
 const cors = require('cors')
 
 const authentication = require('./authentication.js');
+const registration = require('./registration.js')
 const tokenChecker = require('./tokenchecker.js');
-const {google} = require('googleapis');
-const calendar = google.calendar('v3');
 
 const users = require('./user.js');
 
@@ -31,6 +30,7 @@ app.use((req,res,next) => {
 })
 
 app.use('/api/v1/authentications', authentication);
+app.use('/api/v1/registration', registration);
 app.use('/api/v1/users', tokenChecker);
 
 app.use('/api/v1/users/me', users);

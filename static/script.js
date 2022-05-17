@@ -38,3 +38,29 @@ function login()
 
 };
 
+function registration (){
+    console.log("in script.js")
+    var email = document.getElementById("ìEmail").value;
+    var password = document.getElementById("Password").value;
+    var userType = document.getElementById("userType").value;
+    fetch('../api/v1/registration', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify( { email: email, password: password, userType: userType } ),
+    })
+    .then((resp) => resp.json()) // Transform the data into json
+    .then(function(data) { // Here you get the data to modify as you please
+        console.log(data);
+        newUser.token = data.token;
+        newUser.email = data.email;
+        newUser.id = data.id;
+        newUser.self = data.self;
+        // loggedUser.id = loggedUser.self.substring(loggedUser.self.lastIndexOf('/') + 1);
+        document.getElementById("loggedUser").innerHTML = loggedUser.email;
+        loadLendings();
+        return;
+    })
+    .catch( error => console.error(error) ); // If there is any error you will catch them here
+
+};
+

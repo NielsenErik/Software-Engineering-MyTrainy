@@ -10,8 +10,7 @@ var loggedUser = {};
  * A student is loaded given the specified email,
  * if it exists, the studentId is used in future calls.
  */
-function login()
-{   
+function login(){   
     //get the form object
     var email = document.getElementById("loginEmail").value;
     var password = document.getElementById("loginPassword").value;
@@ -38,28 +37,18 @@ function login()
 
 };
 
-function registration (){
+function registration(){
     console.log("in script.js")
-    var email = document.getElementById("ìEmail").value;
-    var password = document.getElementById("Password").value;
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
     var userType = document.getElementById("userType").value;
-    fetch('../api/v1/registration', {
+    fetch('../api/v1/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( { email: email, password: password, userType: userType } ),
     })
-    .then((resp) => resp.json()) // Transform the data into json
-    .then(function(data) { // Here you get the data to modify as you please
-        console.log(data);
-        newUser.token = data.token;
-        newUser.email = data.email;
-        newUser.id = data.id;
-        newUser.self = data.self;
-        // loggedUser.id = loggedUser.self.substring(loggedUser.self.lastIndexOf('/') + 1);
-        document.getElementById("loggedUser").innerHTML = loggedUser.email;
-        loadLendings();
-        return;
-    })
+    .then(response => response.json())  // converti a json
+    .then(json => console.log(json)) 
     .catch( error => console.error(error) ); // If there is any error you will catch them here
 
 };

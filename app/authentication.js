@@ -40,21 +40,5 @@ router.post('', login = async function(req, res) {
 
 });
 
-router.post('', register = async (req, res) => {
-	const { email, password, userType } = req.body;
-  
-	const emailAlreadyExists = await User.findOne({ email });
-	if (emailAlreadyExists) {
-	  throw new CustomError.BadRequestError('Email already exists');
-	}
-  
-	// first registered user is an admin
-	const isFirstAccount = (await User.countDocuments({})) === 0;
-  
-	const user = await User.create({ email, password, userType });
-	const tokenUser = createTokenUser(user);
-	attachCookiesToResponse({ res, user: tokenUser });
-	res.status(StatusCodes.CREATED).json({ user: tokenUser });
-  });
 
 module.exports = router

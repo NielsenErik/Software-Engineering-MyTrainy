@@ -1,13 +1,20 @@
-
 <!DOCTYPE html>
-<html>
-
+<html lang = "en">
 <head>
+	<meta charset = "UTF-8">
+	<title> Login </title>
+	<style>
+		#mylink{
+			font-size: 25px;
+		}
+	</style>
 </head>
+<body align='center'>
+  <header>
+        <h1>MyTrainy</h1>
+	</header>
 
-<body>
 
-<h1>MyTrainy</h1>
 
 <form action="api/v1/users" method="post" name="loginform" id="loginform">
   <span>Logged User:</span>
@@ -15,8 +22,10 @@
   <input name="email" value="mario.rossi@unitn.com" id="loginEmail"/>
   <input name="email" value="123" id="loginPassword"/>
   <button type="button" onclick="login()">LogIn</button>
+  <script src="./script.js"></script>
 </form>
 <a id="mylink" href="./registration.html">Sign Up!</a>
+<script src="./script.js"></script>
     
 </body>
 

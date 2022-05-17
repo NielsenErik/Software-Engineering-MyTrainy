@@ -36,7 +36,7 @@ router.post('', login = async function(req, res) {
 	}
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
 
-	res.redirect('/api/v1/user/'+user._id)
+	return res.redirect('users/'+user._id)
 
 });
 

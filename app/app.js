@@ -30,12 +30,16 @@ app.use((req,res,next) => {
 })
 
 app.use('/api/v1/authentications', authentication);
-app.use('/api/v1/registration', registration);
-app.use('/api/v1/users', tokenChecker);
+app.use('/api/v1/users/me', tokenChecker);
 
-app.use('/api/v1/user', users);
+app.use('/api/v1/users', users);
+
+app.use((req, res) => {
+    res.status(404);
+    res.json({ error: 'Not found' });
+});
 
 
 
 
- module.exports = app
+module.exports = app

@@ -17,7 +17,7 @@ router.get('/me', async (req, res) => {
     });
 });
 
-router.get('', async (req, res) => {
+router.get('/user', async (req, res) => {
     let users;
 
     if (req.query.email)

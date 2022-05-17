@@ -31,7 +31,10 @@ app.use((req,res,next) => {
 })
 
 app.use('/api/v1/authentications', authentication);
-app.use('/api/v1/users', users);
+app.use('/api/v1/users', tokenChecker);
+
+app.use('/api/v1/users/me', users);
+
 
 
 

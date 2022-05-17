@@ -8,18 +8,18 @@ module.exports = mongoose.model('Card', new Schema({
         type: String,
         required: [true, 'Please provide card Title'],
         minlength: 1
-        },
-      sport: {
+  },
+  sport: {
         type: String,
         required: [true, 'Please provide sport'],
         minlength: 1
-      },
-      date: {
+  },
+  date: {
         type: String,
         required: [true, 'Please provide date'],
         minlength:6
-      },
-      comment: {
+  },
+  comment: {
         type: String,
-      },
+  },
 }));

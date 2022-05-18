@@ -1,4 +1,3 @@
-
 const express = require('express');
 const app = express();
 const cors = require('cors')
@@ -6,7 +5,7 @@ const cors = require('cors')
 const authentication = require('./authentication.js');
 const registration = require('./registration.js')
 const tokenChecker = require('./tokenchecker.js');
-const cards = require('./card.js')
+const cards = require('./card.js');
 const users = require('./user.js');
 
 
@@ -18,7 +17,6 @@ const users = require('./user.js');
  app.use(cors())
  const notFoundMiddleware = require('../middleware/not-found');
 const errorHandlerMiddleware = require('../middleware/error-handler');
-//const card = require('./models/card.js');
 
 app.use('/', express.static(process.env.FRONTEND || 'static'));
 app.use('/', express.static('static')); // expose also this folder
@@ -31,16 +29,18 @@ app.use((req,res,next) => {
 })
 
 app.use('/api/v1/authentications', authentication);
-app.use('/api/v1/registration', registration);
-//app.use('/api/v1/users', tokenChecker);
+app.use('/api/v1/users/me', tokenChecker);
 
-app.use('/api/v1/users/me', users);
+app.use('/api/v1/users', users);
 
-app.use('/api/v1/card', cards); //getAllCards e createCard
-//app.use('/api/v1/card/:id', card); //getSingleCard updateCar deleteCard
+app.use('/api/v1/card', cards); 
+
+app.use((req, res) => {
+    res.status(404);
+    res.json({ error: 'Not found' });
+});
 
 
 
 
-
- module.exports = app
+module.exports = app

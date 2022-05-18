@@ -6,7 +6,7 @@ const cors = require('cors')
 const authentication = require('./authentication.js');
 const registration = require('./registration.js')
 const tokenChecker = require('./tokenchecker.js');
-
+const cards = require('./card.js');
 const users = require('./user.js');
 
 
@@ -33,6 +33,7 @@ app.use('/api/v1/authentications', authentication);
 app.use('/api/v1/users/me', tokenChecker);
 
 app.use('/api/v1/users', users);
+app.use('/api/v1/card', cards); 
 
 app.use((req, res) => {
     res.status(404);

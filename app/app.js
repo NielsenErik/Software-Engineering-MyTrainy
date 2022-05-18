@@ -31,13 +31,13 @@ app.use((req,res,next) => {
 app.use('/api/v1/authentications', authentication);
 app.use('/api/v1/users/me', tokenChecker);
 
+
 app.use('/api/v1/users', users);
 
 app.use((req, res) => {
     res.status(404);
     res.json({ error: 'Not found' });
 });
-
 
 
 

@@ -36,6 +36,8 @@ app.use('/api/v1/users', users);
 
 app.use('/api/v1/card', cards); 
 
+console.log('')
+
 app.use((req, res) => {
     res.status(404);
     res.json({ error: 'Not found' });

@@ -4,6 +4,9 @@ var Schema = mongoose.Schema;
 
 // set up a mongoose model
 module.exports = mongoose.model('Card', new Schema({ 
+      userId:{
+            type: String,
+      },
 	title: {
         type: String,
         required: [true, 'Please provide card Title'],

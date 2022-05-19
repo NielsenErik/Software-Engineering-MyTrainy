@@ -3,6 +3,7 @@
  * This variable stores the logged in user
  */
 var loggedUser = {};
+var newUser = {};
 
 /**
  * This function is called when login button is pressed.
@@ -29,9 +30,7 @@ function login(){
         loggedUser.id = data.id;
         loggedUser.self = data.self;
         // loggedUser.id = loggedUser.self.substring(loggedUser.self.lastIndexOf('/') + 1);
-        document.getElementById("loggedUser").innerHTML = loggedUser.email;
-        loadLendings();
-        return;
+        document.getElementById("loggedUser").textContent = loggedUser.email;
     })
     .catch( error => console.error(error) ); // If there is any error you will catch them here
 
@@ -46,9 +45,16 @@ function registration(){
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( { email: email, password: password, userType: userType } ),
+    }).then(function(data) { // Here you get the data to modify as you please
+        //console.log(data);
+        newUser.email = data.email;
+        newUser.id = data.id;
+        newUser.self = data.self;
+        // loggedUser.id = loggedUser.self.substring(loggedUser.self.lastIndexOf('/') + 1);
+        document.getElementById("newUser").innerHTML = "Created";
+        //loadLendings();
+        return;
     })
-    .then(response => response.json())  // converti a json
-    .then(json => console.log(json)) 
     .catch( error => console.error(error) ); // If there is any error you will catch them here
 
 };

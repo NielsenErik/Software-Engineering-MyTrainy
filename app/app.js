@@ -3,7 +3,6 @@ const app = express();
 const cors = require('cors')
 
 const authentication = require('./authentication.js');
-const registration = require('./registration.js')
 const tokenChecker = require('./tokenchecker.js');
 const cards = require('./card.js');
 const users = require('./user.js');

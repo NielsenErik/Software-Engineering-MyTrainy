@@ -16,6 +16,20 @@ router.get('/:id', async (req, res) => {
     res.status(200).json({ user })
 });
 
+router.get('/me', async (req, res) => {
+    if(!req.loggedUser) {
+        return;
+    }
+
+    // https://mongoosejs.com/docs/api.html#model_Model.find
+    let user = await User.findOne({email: req.loggedUser.email});
+
+    res.status(200).json({
+        self: '/api/v1/users/' + user.id,
+        email: user.email
+    });
+});
+
 
 router.post('', async (req, res) => {
     

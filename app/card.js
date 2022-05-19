@@ -1,14 +1,36 @@
 const express = require('express');
 const res = require('express/lib/response');
 const { createCustomError } = require('../errors/custom-error');
-const card = require('./models/card');
+const Card = require('./models/card');
 const router = express.Router();
-const User = require('./models/card'); // get our mongoose model
+const User = require('./models/user'); // get our mongoose model
 
 // get all Cards
-router.get('/', async (req, res) =>{
-    const cards = await card.find({})
-    res.status(200).json(cards);
+router.get('', async (req, res) =>{
+    ////////////////////////////////////////////////////
+    console.log("Sono in get all Cards")
+    let usersCard;
+
+    if ( req.query.userId )
+        userCard = await Card.find({
+            userId: req.query.userId
+        }).exec();
+    
+    else
+        usersCard = await Card.find({}).exec();
+
+    usersCard = usersCard.map( (dbEntry) => {
+        return {
+            self: '/api/v1/cards/' + dbEntry.id,
+            student: '/api/v1/users/' + dbEntry.studentId,
+        };
+    });
+
+    res.status(200).json(usersCard);
+
+    ///////////////////////////////////////////
+    //const cards = await Card.find({})
+    //res.status(200).json(cards);
     //res.send('get all Cards')
 })
 
@@ -16,7 +38,7 @@ router.get('/', async (req, res) =>{
 router.get('/:id', async (req, res) =>{
     const {id: cardID} = req.params
     const cardSelected = await
-    card.findOne({_id:cardID})
+    Card.findOne({_id:cardID})
     if(!cardSelected){
         return next(createCustomError('No card with id : ${cardID}', 404))
     }
@@ -27,14 +49,14 @@ router.get('/:id', async (req, res) =>{
 //create Card
 router.post('/', async (req, res) =>{
     const newCard = await
-    card.create(req.body)
-    res.status(200).json({card})
+    Card.create(req.body)
+    res.status(200).json({card: Card})
 })
 
 //update Card
 router.patch('/:id', async (req, res) =>{
     const {id: cardID} = req.params
-    const cardSelected = await card.findByIdAndUpdate({_id:cardID}, req.body, {
+    const cardSelected = await Card.findByIdAndUpdate({_id:cardID}, req.body, {
         new : true,
         runValidators : true
     })
@@ -48,7 +70,7 @@ router.patch('/:id', async (req, res) =>{
 router.delete('/:id', async (req, res, next) =>{
     const {id: cardID} = req.params
     const cardSelected = await
-    card.findOneAndDelete({_id: cardID})
+    Card.findOneAndDelete({_id: cardID})
     if(!cardSelected){
         return next(createCustomError('No card with id : ${cardID', 404))
     }

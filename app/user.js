@@ -2,6 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const User = require('./models/user'); // get our mongoose model
+const jwt = require('jsonwebtoken'); 
+require('dotenv').config()
 
 router.get('/:id', async (req, res) => {
     const { id: userID } = req.params
@@ -48,7 +50,15 @@ router.post('', async (req, res) => {
      * Link to the newly created resource is returned in the Location header
      * https://www.restapitutorial.com/lessons/httpmethods.html
      */
-     return res.redirect('users/'+userId)
+    console.log('Created user with:'+user.email)
+    return res.json({
+		success: true,
+		email: user.email,
+		id: userId,
+		self: "api/v1/users" + userId
+	});
+    
+
     
 });
 

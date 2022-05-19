@@ -14,13 +14,16 @@ router.post('', login = async function(req, res) {
 	
 	// user not found
 	if (!user) {
+		console.log('Authentication failed. User not found.')
 		res.json({ success: false, message: 'Authentication failed. User not found.' });
+		return;
 	}
 	
 	// check if password matches
 	if (user.password != req.body.password) {
+		console.log('Authentication failed. Wrong password.')
 		res.json({ success: false, message: 'Authentication failed. Wrong password.' });
-		res.redirect('/')
+		return;
 	}
 	
 	
@@ -36,7 +39,15 @@ router.post('', login = async function(req, res) {
 	}
 	var token = jwt.sign(payload, process.env.SUPER_SECRET, options);
 
-	return res.redirect('users/'+user._id)
+	res.json({
+		success: true,
+		message: 'Enjoy your token!',
+		token: token,
+		email: user.email,
+		id: user._id,
+		self: "api/v1/users" + user._id
+	});
+	console.log('Login avvenuto')
 
 });
 

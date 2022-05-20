@@ -11,3 +11,46 @@ API per usare la piattaforma MyTrainy, progetto di Ingengeria del Software UniTN
 Due tipologie:
 * atleta
 * allenatore
+
+Crea un nuovo utente che può accedere alla piattaforma. 
+Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gli sono concesse.
+
++ Request (application/json)
+
+    + Attributes
+        - email (string, required) - Email dell'utente
+        - password (string, required) - Password scelta dall'utente 
+        - userType (string, required) - Tipologia di utente da selezionare
+        
++ Response 200
+    
+    User created
+    
+    + Body
+            
+            {
+                "success": "true"
+                "email": "user.email"
+                "id": "userId"
+                "self": ""api/v1/users" + userId"
+            }
+            
++ Response 400
+
+    Ritornato se la richiesta è errata : il parametro email è vuoto o scritto in formato errato.
+    
+    + Body
+        
+            {
+                "error": "'The field "email" must be a non-empty string, in email format'"
+            }
+            
++ Response 500
+
+    Ritorna se la email esiste già
+    
+    + Body
+        
+            {
+                "error": "'The email already exists'"
+            }

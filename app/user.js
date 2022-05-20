@@ -70,7 +70,7 @@ router.post('', async (req, res) => {
 		email: user.email,
 		id: userId,
 		self: "api/v1/users" + userId
-	});
+	}).status(200);
     
 
     

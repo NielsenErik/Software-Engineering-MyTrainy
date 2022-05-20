@@ -6,23 +6,24 @@ const router = express.Router();
 const User = require('./models/user'); // get our mongoose model
 
 // get all Cards
-router.get('', async (req, res) =>{
+router.get('/', async (req, res) =>{
     ////////////////////////////////////////////////////
-    console.log("Sono in get all Cards")
     let usersCard;
 
-    if ( req.query.userId )
+    if ( req.query.userId ){
         userCard = await Card.find({
             userId: req.query.userId
         }).exec();
+    }
     
-    else
+    else{
         usersCard = await Card.find({}).exec();
+    }
 
     usersCard = usersCard.map( (dbEntry) => {
         return {
             self: '/api/v1/cards/' + dbEntry.id,
-            student: '/api/v1/users/' + dbEntry.studentId,
+            student: '/api/v1/users/' + dbEntry.userId,
         };
     });
 

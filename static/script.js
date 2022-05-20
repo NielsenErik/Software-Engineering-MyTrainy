@@ -31,7 +31,6 @@ function login(){
         loggedUser.self = data.self;
         // loggedUser.id = loggedUser.self.substring(loggedUser.self.lastIndexOf('/') + 1);
         document.getElementById("loggedUser").textContent = loggedUser.email;
-        myCards();
         return;
     })
     .catch( error => console.error(error) ); // If there is any error you will catch them here
@@ -61,38 +60,6 @@ function registration(){
 
 };
 
-function myCards(){
-    console.log("Sono in my Cards")
-    const ul = document.getElementById('myCards'); // Get the list where we will place our lendings
 
-    ul.innerHTML = '';
-    fetch('../api/v1/card', {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify( { userId:loggedUser.id } ),})
-    .then((resp) => resp.json()) // Transform the data into json
-    .then(function(data) { // Here you get the data to modify as you please
-        
-        console.log(data);
-        
-        return data.map( (entry) => { // Map through the results and for each run the code below
-            
-            // let bookId = book.self.substring(book.self.lastIndexOf('/') + 1);
-            
-            let li = document.createElement('li');
-            let span = document.createElement('span');
-            // span.innerHTML = `<a href="${entry.self}">${entry.book}</a>`;
-            let a = document.createElement('a');
-            a.href = entry.self
-            a.textContent = entry.book;
-            
-            // Append all our elements
-            span.appendChild(a);
-            li.appendChild(span);
-            ul.appendChild(li);
-        })
-    })
-    .catch( error => console.error(error) );// If there is any error you will catch them here
-};
 
 

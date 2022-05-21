@@ -190,6 +190,8 @@ L'utente crea una nuova scheda e viene aggiornato il database
             }
         
 + Response 200
+    
+    Query a buon fine
 
     + Body 
     
@@ -197,7 +199,69 @@ L'utente crea una nuova scheda e viene aggiornato il database
                 "success": "true"
             }
     
-    Query a buon fine
+    
     
 
-### Modifica di una scheda PATCH
+### Modifica di una scheda PATCH [api/v1/card/:id]
+
+L'utente modifica una scheda e viene aggiornato il database.
+
++ Response 400
+
+    Dati non correttamente formattati o mancanti
+    
+    + Body
+    
+            { 
+                "success": "false",
+                "reason": "Wrong format",
+                "error": "1"
+            }
+    
++ Response 406
+
+    Risposta per errori legati al database. 
+    
+    + Body 
+            
+            { 
+                "success": "false",
+                "reason": "db",
+                "error": "1"
+            }
+        
++ Response 200
+    
+    Query a buon fine
+
+    + Body 
+    
+            {
+                "success": "true"
+            }
+
+### Cancellazione di una scheda DELETE 
+
+L'utente cancella una scheda e viene aggioranto il database. 
+
++ Response 406
+
+    Risposta per errori legati al database. 
+    
+    + Body 
+            
+            { 
+                "success": "false",
+                "reason": "db",
+                "error": "1"
+            }
+        
++ Response 200
+    
+    Query a buon fine
+
+    + Body 
+    
+            {
+                "success": "true"
+            }

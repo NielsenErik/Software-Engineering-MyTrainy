@@ -29,8 +29,9 @@ function login(){
         loggedUser.email = data.email;
         loggedUser.id = data.id;
         loggedUser.self = data.self;
-        // loggedUser.id = loggedUser.self.substring(loggedUser.self.lastIndexOf('/') + 1);
+        
         document.getElementById("loggedUser").textContent = loggedUser.email;
+        loadCard();
         return;
     })
     .catch( error => console.error(error) ); // If there is any error you will catch them here
@@ -53,12 +54,30 @@ function registration(){
         newUser.self = data.self;
         // loggedUser.id = loggedUser.self.substring(loggedUser.self.lastIndexOf('/') + 1);
         document.getElementById("newUser").innerHTML = "Created";
-        myCards();
         return;
     })
     .catch( error => console.error(error) ); // If there is any error you will catch them here
 
 };
+
+function loadCard(){
+    
+    fetch('../api/v1/card/'+loggedUser.id, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(),
+    })
+    .then((resp) => resp.json())
+    .then(function(data) {
+        data.forEach(el => {
+            var opt = document.createElement('option');
+            var training = el.title +"  |   "+el.sport+"  |  "+el.date + "  |  "+ el.self
+            opt.innerHTML = training;
+            opt.value = el._id;
+            document.getElementById("myCards").appendChild(opt);
+        })
+    })
+}
 
 
 

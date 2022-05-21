@@ -6,28 +6,45 @@ const router = express.Router();
 const User = require('./models/user'); // get our mongoose model
 
 // get all Cards
-router.get('/', async (req, res) =>{
+router.get('/:userId', async function(req, res){
     ////////////////////////////////////////////////////
-    let usersCard;
+    console.log("in CArds")
 
-    if ( req.query.userId ){
-        userCard = await Card.find({
-            userId: req.query.userId
-        }).exec();
+    const {userId: userID} = req.params
+    let userCard = await Card.find({userId:userID})
+    if(!userCard){
+        return next(createCustomError('No card for user with id:'+req.params, 404))
     }
+
+    /*const {userId : } = req.params
     
+    console.log(userID)
+    let userCard = await Card.find({
+        userId: req.params
+    }).exec();
+    if ( userID. ){
+        userCard = await Card.find({
+            userId: userID
+        }).exec();
+        console.log("got users card w "+usersCard.userId)
+        
+    }    
     else{
         usersCard = await Card.find({}).exec();
-    }
+        console.log("got user id "+usersCard.userId)
+    }*/
+    
 
-    usersCard = usersCard.map( (dbEntry) => {
+    userCard = userCard.map( (dbEntry) => {
         return {
-            self: '/api/v1/cards/' + dbEntry.id,
-            student: '/api/v1/users/' + dbEntry.userId,
+            self: '/api/v1/card/' + dbEntry.id,
+            title: dbEntry.title,
+            sport: dbEntry.sport,
+            date: dbEntry.date,
         };
     });
-
-    res.status(200).json(usersCard);
+    console.log("return from cards")
+    res.status(200).json(userCard);
 
     ///////////////////////////////////////////
     //const cards = await Card.find({})
@@ -38,12 +55,11 @@ router.get('/', async (req, res) =>{
 //get single Card
 router.get('/:id', async (req, res) =>{
     const {id: cardID} = req.params
-    const cardSelected = await
-    Card.findOne({_id:cardID})
+    const cardSelected = await Card.findOne({_id:cardID})
     if(!cardSelected){
         return next(createCustomError('No card with id : ${cardID}', 404))
     }
-    res.status(200).json({cardSelected});
+    res.json({cardSelected}).status(200);
    // res.send('get single Card')
 })
 

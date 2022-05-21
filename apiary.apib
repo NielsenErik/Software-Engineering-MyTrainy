@@ -15,7 +15,7 @@ Due tipologie:
 Crea un nuovo utente che può accedere alla piattaforma. 
 Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gli sono concesse.
 
-+ Request (application/json)
++ Request 
 
     + Attributes
         - email (string, required) - Email dell'utente
@@ -59,13 +59,13 @@ Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gl
 
 ### Autenticazione utente
 
-All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di esso e la correttezza della password.
+All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di esso e la correttezza della password per poter effettuare il login.
     
     let user = await User.findOne({
             email: req.body.email
         }).exec();
     
-+ Request (application/json)
++ Request 
 
 + Response [Authentication failed. User not found]
 
@@ -104,4 +104,29 @@ All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di es
                 "self": ""api/v1/" + user._id"
             } 
             
-## Metodi per le schede dell'utente [api/v1/card]
+## Metodi per le schede di allenamento 
+
+### Ritorna tutte le schede di un utente GET [api/v1/card]
+
+Richiede al database tutte le schede di allenamento dell'utente autenticato, sfruttando il campo userId negli attributi della scheda, controllando che corrisponda all'id dell'utente. 
+
++ Request 
+
++ Response 404
+
+    Ritorna se non vengono trovate schede per l'utente.
+    
++ Response 200
+
+   Query a buon fine 
+   
+   + Body
+    
+            {
+                "self": "'api/v1/card/' + dbEntry.id"
+                "title": "dbEntry.title"
+                "sport": "dbEntry.sport"
+                "date": "dbEntry.date"
+            }
+            
+### Ritorna una scheda nello specifico GET [api/v1/card/:id]

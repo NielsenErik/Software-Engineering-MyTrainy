@@ -21,7 +21,7 @@ Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gl
         - email (string, required) - Email dell'utente
         - password (string, required) - Password scelta dall'utente 
         - userType (string, required) - Tipologia di utente da selezionare
-        
+
 + Response 200
     
     User created
@@ -34,7 +34,7 @@ Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gl
                 "id": "userId"
                 "self": ""api/v1/users" + userId"
             }
-            
+
 + Response 400
 
     Ritornato se la richiesta è errata : il parametro email è vuoto o scritto in formato errato.
@@ -44,7 +44,7 @@ Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gl
             {
                 "error": "'The field "email" must be a non-empty string, in email format'"
             }
-            
+
 + Response 500
 
     Ritorna se la email esiste già
@@ -54,7 +54,7 @@ Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gl
             {
                 "error": "'The email already exists'"
             }
-            
+
 ## Autenticazione [/api/v1/authentications]
 
 ### Autenticazione utente
@@ -102,8 +102,8 @@ All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di es
                 "email": "user.email"
                 "id": "user.id"
                 "self": ""api/v1/" + user._id"
-            } 
-            
+            }   
+
 ## Metodi per le schede di allenamento 
 
 ### Ritorna tutte le schede di un utente GET [api/v1/card]
@@ -128,5 +128,76 @@ Richiede al database tutte le schede di allenamento dell'utente autenticato, sfr
                 "sport": "dbEntry.sport"
                 "date": "dbEntry.date"
             }
-            
+
 ### Ritorna una scheda nello specifico GET [api/v1/card/:id]
+
+Richiede al database una scheda specifica selezionata dall'utente
+
++ Request
+
++ Response 404
+    
+    Ritorna se non esiste una card con quello specifico id.
+    
++ Response 200
+
+    Query a buon fine
+    
+    + Body 
+    
+            {
+            
+            
+            
+            }
+            
+
+### Creazione di una nuova scheda POST [api/v1/card]
+
+L'utente crea una nuova scheda e viene aggiornato il database
+
++ Request
+
+    + Attributes
+        - userId (string) - Id dell'utente 
+        - title (string, required, minlength = 1) - Titolo della scheda
+        - sport (string, required, minlength = 1) - Tipologia della scheda 
+        - date (string, required, minlength = 6) - Data
+        - comment (string) - Commento
+        
++ Response 400
+
+    Dati non correttamente formattati o mancanti
+    
+    + Body
+    
+            { 
+                "success": "false",
+                "reason": "Wrong format",
+                "error": "1"
+            }
+    
++ Response 406
+
+    Risposta per errori legati al database. 
+    
+    + Body 
+            
+            { 
+                "success": "false",
+                "reason": "db",
+                "error": "1"
+            }
+        
++ Response 200
+
+    + Body 
+    
+            {
+                "success": "true"
+            }
+    
+    Query a buon fine
+    
+
+### Modifica di una scheda PATCH

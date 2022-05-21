@@ -56,3 +56,50 @@ Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gl
             }
             
 ## Autenticazione [/api/v1/authentication]
+
+### Autenticazione utente
+
+All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di esso e la correttezza della password.
+    
+    let user = await User.findOne({
+            email: req.body.email
+        }).exec();
+    
++ Request (application/json)
+
++ Response [Authentication failed. User not found]
+
+    Ritorna se l'utente non viene trovato
+    
+    + Body
+            
+            {
+                "success": "false"
+                "message": "'Authentication failed. User not found'"
+            }
+            
++ Response [Authentication failed. Wrong password]
+
+    Ritorna se l'utente ha inserito la password sbagliata.
+    
+    + Body
+            
+            {
+                "success": "false"
+                "message": "'Authentication failed. Wrong password'"
+            }
+            
++ Response 
+ 
+    Login avvenuto
+    
+    + Body
+    
+            {
+                "success": "true"
+                "message": "'Enjoy your token!"
+                "token": "token"
+                "email": "user.email"
+                "id": "user.id"
+                "self": ""api/v1/" + user._id"
+            }

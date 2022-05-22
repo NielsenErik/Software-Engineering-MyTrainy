@@ -16,25 +16,6 @@ router.get('/:userId', async function(req, res){
         return next(createCustomError('No card for user with id:'+req.params, 404))
     }
 
-    /*const {userId : } = req.params
-    
-    console.log(userID)
-    let userCard = await Card.find({
-        userId: req.params
-    }).exec();
-    if ( userID. ){
-        userCard = await Card.find({
-            userId: userID
-        }).exec();
-        console.log("got users card w "+usersCard.userId)
-        
-    }    
-    else{
-        usersCard = await Card.find({}).exec();
-        console.log("got user id "+usersCard.userId)
-    }*/
-    
-
     userCard = userCard.map( (dbEntry) => {
         return {
             self: '/api/v1/card/' + dbEntry.id,
@@ -64,10 +45,23 @@ router.get('/:id', async (req, res) =>{
 })
 
 //create Card
-router.post('/', async (req, res) =>{
-    const newCard = await
-    Card.create(req.body)
-    res.status(200).json({card: Card})
+router.post('/:userId', async (req, res) =>{
+    const {userId: userID} = req.params
+    let checkUser = await User.find({userId:userID})
+    if(!checkUser){
+        return next(createCustomError('No logged user yet:'+req.params, 500))
+    }
+    let newCard = await Card.create(req.body)
+    newCard = newCard.map( (dbEntry) => {
+        return {
+            self: '/api/v1/card/' + dbEntry.id,
+            title: dbEntry.title,
+            sport: dbEntry.sport,
+            date: dbEntry.date,
+        };
+    });
+    console.log("return from POST cards")
+    res.status(200).json(newCard);
 })
 
 //update Card

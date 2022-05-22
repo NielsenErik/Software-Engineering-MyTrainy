@@ -79,6 +79,31 @@ function loadCard(){
     })
 }
 
+function createNewTraining(){
+    console.log("in script.js")
+    var title = document.getElementById("title").value;
+    var sport = document.getElementById("sport").value;
+    var date = document.getElementById("date").value;
+    var comment = document.getElementById("comment").value;
+    fetch('../api/v1/card/'+loggedUser.id, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify( { userId: loggedUser.id, title: title, sport: sport, date:date, comment: comment } ),
+    }).then(function(data) { // Here you get the data to modify as you please
+        //console.log(data);
+        var opt = document.createElement('option');
+        var createdTraining = newTraining.title+" | "+newTraining.sport+" | "+newTraining.date+" | "+newTraining.self
+        opt.innerHTML = createdTraining;
+        opt.value = data._id;
+        // loggedUser.id = loggedUser.self.substring(loggedUser.self.lastIndexOf('/') + 1);
+        document.getElementById("createdTraining").appendChild(opt);
+        return;
+    })
+    .catch( error => console.error(error) ); // If there is any error you will catch them here
+
+};
+
+
 
 
 

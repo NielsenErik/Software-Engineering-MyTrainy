@@ -40,7 +40,7 @@ router.get('/:id', async (req, res) =>{
     if(!cardSelected){
         return next(createCustomError('No card with id : ${cardID}', 404))
     }
-    res.json({cardSelected}).status(200);
+    res.status(200).json({cardSelected});
    // res.send('get single Card')
 })
 
@@ -49,7 +49,7 @@ router.post('/:userId', async (req, res) =>{
     const {userId: userID} = req.params
     let checkUser = await User.find({userId:userID})
     if(!checkUser){
-        return next(createCustomError('No logged user yet:'+req.params, 500))
+        return next(createCustomError('No logged user yet', 500))
     }
     let newCard = await Card.create(req.body)
     newCard = newCard.map( (dbEntry) => {

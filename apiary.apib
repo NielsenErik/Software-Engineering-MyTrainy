@@ -7,7 +7,7 @@ API per usare la piattaforma MyTrainy, progetto di Ingengeria del Software UniTN
 
 ## Registrazione [/api/v1/users]
 
-### Registrazione di un nuovo utente POST
+### Registrazione di un nuovo utente [POST]
 Due tipologie:
 * atleta
 * allenatore
@@ -57,17 +57,13 @@ Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gl
 
 ## Autenticazione [/api/v1/authentications]
 
-### Autenticazione utente
+### Autenticazione utente [POST]
 
 All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di esso e la correttezza della password per poter effettuare il login.
     
-    let user = await User.findOne({
-            email: req.body.email
-        }).exec();
-    
 + Request 
 
-+ Response [Authentication failed. User not found]
++ Response 400 
 
     Ritorna se l'utente non viene trovato
     
@@ -78,7 +74,7 @@ All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di es
                 "message": "'Authentication failed. User not found'"
             }
             
-+ Response [Authentication failed. Wrong password]
++ Response 401
 
     Ritorna se l'utente ha inserito la password sbagliata.
     
@@ -89,7 +85,7 @@ All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di es
                 "message": "'Authentication failed. Wrong password'"
             }
             
-+ Response 
++ Response 200
  
     Login avvenuto
     
@@ -104,9 +100,9 @@ All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di es
                 "self": ""api/v1/" + user._id"
             }   
 
-## Metodi per le schede di allenamento 
+## Metodi per le schede di allenamento [api/v1/card/:userId]
 
-### Ritorna tutte le schede di un utente GET [api/v1/card]
+### Ritorna tutte le schede di un utente [GET]
 
 Richiede al database tutte le schede di allenamento dell'utente autenticato, sfruttando il campo userId negli attributi della scheda, controllando che corrisponda all'id dell'utente. 
 
@@ -129,7 +125,7 @@ Richiede al database tutte le schede di allenamento dell'utente autenticato, sfr
                 "date": "dbEntry.date"
             }
 
-### Ritorna una scheda nello specifico GET [api/v1/card/:id]
+### Ritorna una scheda nello specifico [GET]
 
 Richiede al database una scheda specifica selezionata dall'utente
 
@@ -152,17 +148,17 @@ Richiede al database una scheda specifica selezionata dall'utente
             }
             
 
-### Creazione di una nuova scheda POST [api/v1/card]
+### Creazione di una nuova scheda [POST]
 
 L'utente crea una nuova scheda e viene aggiornato il database
 
 + Request
 
     + Attributes
-        - userId (string) - Id dell'utente 
-        - title (string, required, minlength = 1) - Titolo della scheda
-        - sport (string, required, minlength = 1) - Tipologia della scheda 
-        - date (string, required, minlength = 6) - Data
+        - userId (string, required) - Id dell'utente 
+        - title (string, required) - Titolo della scheda
+        - sport (string, required) - Tipologia della scheda 
+        - date (string, required) - Data
         - comment (string) - Commento
         
 + Response 400
@@ -176,19 +172,7 @@ L'utente crea una nuova scheda e viene aggiornato il database
                 "reason": "Wrong format",
                 "error": "1"
             }
-    
-+ Response 406
 
-    Risposta per errori legati al database. 
-    
-    + Body 
-            
-            { 
-                "success": "false",
-                "reason": "db",
-                "error": "1"
-            }
-        
 + Response 200
     
     Query a buon fine
@@ -196,13 +180,16 @@ L'utente crea una nuova scheda e viene aggiornato il database
     + Body 
     
             {
-                "success": "true"
+                "self": "'/api/v1/card/' + dbEntry.id"
+                "title": "dbEntry.title"
+                "sport": "dbEntry.sport"
+                "date": "dbEntry.date"
             }
     
     
     
 
-### Modifica di una scheda PATCH [api/v1/card/:id]
+### Modifica di una scheda [PATCH]
 
 L'utente modifica una scheda e viene aggiornato il database.
 
@@ -240,7 +227,7 @@ L'utente modifica una scheda e viene aggiornato il database.
                 "success": "true"
             }
 
-### Cancellazione di una scheda DELETE [api/v1/card/:id]
+### Cancellazione di una scheda [DELETE]
 
 L'utente cancella una scheda e viene aggioranto il database. 
 

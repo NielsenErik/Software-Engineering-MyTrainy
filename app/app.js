@@ -6,6 +6,7 @@ const authentication = require('./authentication.js');
 const tokenChecker = require('./tokenchecker.js');
 const cards = require('./card.js');
 const users = require('./user.js');
+const usersCard =require('./getCard.js')
 
 
 /**
@@ -30,7 +31,7 @@ app.use((req,res,next) => {
 app.use('/api/v1/authentications', authentication);
 app.use('/api/v1/users/me', tokenChecker);
 app.use('/api/v1/users', users);
-
+app.use('/api/v1/userCards', usersCard);
 app.use('/api/v1/card', cards); 
 
 console.log('')

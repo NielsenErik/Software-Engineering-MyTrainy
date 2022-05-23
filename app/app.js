@@ -8,10 +8,6 @@ const cards = require('./card.js');
 const users = require('./user.js');
 const usersCard =require('./getCard.js')
 
-
-/**
- * Configure Express.js parsing middleware
- */
  app.use(express.json());
  app.use(express.urlencoded({ extended: true }));
  app.use(cors())
@@ -19,7 +15,7 @@ const usersCard =require('./getCard.js')
 const errorHandlerMiddleware = require('../middleware/error-handler');
 
 app.use('/', express.static(process.env.FRONTEND || 'static'));
-app.use('/', express.static('static')); // expose also this folder
+app.use('/', express.static('static')); 
 
 
 

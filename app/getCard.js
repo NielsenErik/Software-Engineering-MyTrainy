@@ -26,10 +26,6 @@ router.get('/:userId', async function(req, res){
     console.log("return from cards")
     res.status(200).json(userCard);
 
-    ///////////////////////////////////////////
-    //const cards = await Card.find({})
-    //res.status(200).json(cards);
-    //res.send('get all Cards')
 })
 
 module.exports = router

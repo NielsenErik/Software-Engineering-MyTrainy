@@ -107,7 +107,7 @@ All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di es
                 "self": ""api/v1/" + user._id"
             }
 
-## Metodi delle schede di allenamento [/api/v1/card]
+## Metodo per il recupero schede di allenamento dell'utente [/api/v1/userCards]
 
 ### Ritorna tutte le schede di un utente [GET] 
 
@@ -141,6 +141,8 @@ Richiede al database tutte le schede di allenamento dell'utente autenticato, sfr
                 "sport": "dbEntry.sport"
                 "date": "dbEntry.date"
             }
+
+## Metodi delle singole schede di allenamento [/api/v1/card]
 
 ### Ritorna una scheda nello specifico [GET]
 

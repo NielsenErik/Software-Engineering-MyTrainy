@@ -15,7 +15,7 @@ Due tipologie:
 Crea un nuovo utente che può accedere alla piattaforma. 
 Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gli sono concesse.
 
-+ Request 
++ Request (application/json)
 
     + Attributes
         - email (string, required) - Email dell'utente
@@ -24,7 +24,7 @@ Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gl
 
 + Response 200
 
-    User created
+    Utente creato
     
     + Body
             
@@ -61,7 +61,7 @@ Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gl
 
 All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di esso e la correttezza della password per poter effettuare il login.
     
-+ Request 
++ Request (application/json)
 
     + Body 
         
@@ -114,7 +114,7 @@ All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di es
 
 Richiede al database tutte le schede di allenamento dell'utente autenticato, sfruttando il campo userId negli attributi della scheda, controllando che corrisponda all'id dell'utente. 
 
-+ Request 
++ Request (application/json)
 
     + Parameters
     
@@ -147,7 +147,7 @@ Richiede al database tutte le schede di allenamento dell'utente autenticato, sfr
 
 Richiede al database una scheda specifica selezionata dall'utente
 
-+ Request
++ Request (application/json)
 
     + Parameters
         
@@ -170,17 +170,18 @@ Richiede al database una scheda specifica selezionata dall'utente
     + Body 
     
             {
-            
-            
-            
+                "id": "id"
+                "title": "title"
+                "sport": "sport"
+                "date": "date"
+                "comment": "comment"
             }
-            
 
 ### Creazione di una nuova scheda [POST]
 
 L'utente crea una nuova scheda e viene aggiornato il database
 
-+ Request
++ Request (application/json)
 
     + Attributes
         - userId (string, required) - Id dell'utente 
@@ -188,17 +189,15 @@ L'utente crea una nuova scheda e viene aggiornato il database
         - sport (string, required) - Tipologia della scheda 
         - date (string, required) - Data
         - comment (string) - Commento
-        
-+ Response 400
 
-    Dati non correttamente formattati o mancanti
++ Response 500
+
+    Ritorna se l'utente non è ancora loggato nel sistema.
     
     + Body
     
-            { 
-                "success": "false",
-                "reason": "Wrong format",
-                "error": "1"
+            {
+                "message": "'No logged user yet'"
             }
 
 + Response 200
@@ -221,28 +220,20 @@ L'utente crea una nuova scheda e viene aggiornato il database
 
 L'utente modifica una scheda e viene aggiornato il database.
 
-+ Response 400
++ Request (application/json)
 
-    Dati non correttamente formattati o mancanti
+    + Parameters
     
-    + Body
+        + id - cardID
     
-            { 
-                "success": "false",
-                "reason": "Wrong format",
-                "error": "1"
-            }
-    
-+ Response 406
++ Response 404
 
-    Risposta per errori legati al database. 
+    Ritorna se non esiste una scheda con quel dato id. 
     
     + Body 
             
             { 
-                "success": "false",
-                "reason": "db",
-                "error": "1"
+                "message": "'No card with id : ${cardID'"
             }
         
 + Response 200
@@ -259,16 +250,20 @@ L'utente modifica una scheda e viene aggiornato il database.
 
 L'utente cancella una scheda e viene aggioranto il database. 
 
-+ Response 406
++ Request (application/json)
 
-    Risposta per errori legati al database. 
+    + Parameters
+    
+        + id - cardID
+
++ Response 404
+
+    Ritorna se non esiste una scheda con quel dato id.
     
     + Body 
             
             { 
-                "success": "false",
-                "reason": "db",
-                "error": "1"
+                "message": "'No card with id : ${cardID'"
             }
         
 + Response 200

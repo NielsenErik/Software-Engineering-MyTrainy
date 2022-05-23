@@ -62,7 +62,7 @@ function registration(){
 
 function loadCard(){
     
-    fetch('../api/v1/card/'+loggedUser.id, {
+    fetch('../api/v1/userCards/'+loggedUser.id, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(),

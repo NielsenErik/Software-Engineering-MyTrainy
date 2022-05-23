@@ -142,41 +142,7 @@ Richiede al database tutte le schede di allenamento dell'utente autenticato, sfr
                 "date": "dbEntry.date"
             }
 
-## Metodi delle singole schede di allenamento [/api/v1/card]
-
-### Ritorna una scheda nello specifico [GET]
-
-Richiede al database una scheda specifica selezionata dall'utente
-
-+ Request (application/json)
-
-    + Parameters
-        
-         + id - cardID
-
-+ Response 404
-    
-    Ritorna se non esiste una card con quello specifico id.
-    
-    + Body 
-    
-            {
-                "message": "''No card with id : ${cardID}'"
-            }
-    
-+ Response 200
-
-    Query a buon fine
-    
-    + Body 
-    
-            {
-                "id": "id"
-                "title": "title"
-                "sport": "sport"
-                "date": "date"
-                "comment": "comment"
-            }
+## Metodo per la creazione della scheda di allenamento [/api/v1/card/:userId]
 
 ### Creazione di una nuova scheda [POST]
 
@@ -213,9 +179,42 @@ L'utente crea una nuova scheda e viene aggiornato il database
                 "sport": "dbEntry.sport"
                 "date": "dbEntry.date"
             }
+
+## Metodi delle singole schede di allenamento [/api/v1/card/:id]
+
+### Ritorna una scheda nello specifico [GET]
+
+Richiede al database una scheda specifica selezionata dall'utente
+
++ Request (application/json)
+
+    + Parameters
+        
+         + id - cardID
+
++ Response 404
     
+    Ritorna se non esiste una card con quello specifico id.
     
+    + Body 
     
+            {
+                "message": "''No card with id : ${cardID}'"
+            }
+    
++ Response 200
+
+    Query a buon fine
+    
+    + Body 
+    
+            {
+                "id": "id"
+                "title": "title"
+                "sport": "sport"
+                "date": "date"
+                "comment": "comment"
+            }
 
 ### Modifica di una scheda [PATCH]
 

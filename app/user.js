@@ -7,7 +7,6 @@ require('dotenv').config()
 
 router.get('/:id', async (req, res) => {
     const { id: userID } = req.params
-    // https://mongoosejs.com/docs/api.html#model_Model.find
     const user = await User.findOne({ _id: userID })
     if (!user) {
         return next(createCustomError(`No user with id : ${userID}`, 404))
@@ -21,7 +20,6 @@ router.get('/me', async (req, res) => {
         return;
     }
 
-    // https://mongoosejs.com/docs/api.html#model_Model.find
     let user = await User.findOne({email: req.loggedUser.email});
 
     res.status(200).json({
@@ -60,10 +58,7 @@ router.post('', async (req, res) => {
     
     let userId = user.id;
 
-    /**
-     * Link to the newly created resource is returned in the Location header
-     * https://www.restapitutorial.com/lessons/httpmethods.html
-     */
+    
     console.log('Created user with:'+user.email)
     return res.json({
 		success: true,
@@ -77,7 +72,7 @@ router.post('', async (req, res) => {
 });
 
 function checkIfEmailInString(text) {
-    // eslint-disable-next-line
+    
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(text);
 }

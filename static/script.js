@@ -89,17 +89,17 @@ function createNewTraining(){
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify( { userId: loggedUser.id, title: title, sport: sport, date:date, comment: comment } ),
-    }).then(function(data) { // Here you get the data to modify as you please
-        //console.log(data);
+    }).then(function(data) { 
+        
         var opt = document.createElement('option');
         var createdTraining = "New training created, reload page and login to see it!"
         opt.innerHTML = createdTraining;
         opt.value = data._id;
-        // loggedUser.id = loggedUser.self.substring(loggedUser.self.lastIndexOf('/') + 1);
+        
         document.getElementById("createdTraining").appendChild(opt);
         return;
     })
-    .catch( error => console.error(error) ); // If there is any error you will catch them here
+    .catch( error => console.error(error) ); 
 
 };
 

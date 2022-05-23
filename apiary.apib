@@ -63,6 +63,14 @@ All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di es
     
 + Request 
 
+    + Body 
+        
+            {
+                "email": "user.email"
+                "password": "user.password"
+            }
+            
+
 + Response 400 
 
     Ritorna se l'utente non viene trovato
@@ -99,18 +107,28 @@ All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di es
                 "id": "user.id"
                 "self": ""api/v1/" + user._id"
             }
-            
-## Metotodi delle schede di allenamneto [/add a api/v1/card]
 
-### Ritorna tutte le schede di un utente [GET]
+## Metodi delle schede di allenamento [/api/v1/card]
+
+### Ritorna tutte le schede di un utente [GET] 
 
 Richiede al database tutte le schede di allenamento dell'utente autenticato, sfruttando il campo userId negli attributi della scheda, controllando che corrisponda all'id dell'utente. 
 
 + Request 
 
+    + Parameters
+    
+        + userId - userID
+
 + Response 404
 
     Ritorna se non vengono trovate schede per l'utente.
+    
+    + Body
+    
+            {
+                "message": "'No card for user with id:' + req.params"
+            }
     
 + Response 200
 
@@ -131,9 +149,19 @@ Richiede al database una scheda specifica selezionata dall'utente
 
 + Request
 
+    + Parameters
+        
+         + id - cardID
+
 + Response 404
     
     Ritorna se non esiste una card con quello specifico id.
+    
+    + Body 
+    
+            {
+                "message": "''No card with id : ${cardID}'"
+            }
     
 + Response 200
 

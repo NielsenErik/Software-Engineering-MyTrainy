@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 module.exports = mongoose.model('Card', new Schema({ 
       userId:{
             type: String,
+            required: [true, 'Please login'],
       },
 	title: {
         type: String,

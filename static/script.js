@@ -92,7 +92,7 @@ function createNewTraining(){
     }).then(function(data) { // Here you get the data to modify as you please
         //console.log(data);
         var opt = document.createElement('option');
-        var createdTraining = newTraining.title+" | "+newTraining.sport+" | "+newTraining.date+" | "+newTraining.self
+        var createdTraining = "New training created, reload page and login to see it!"
         opt.innerHTML = createdTraining;
         opt.value = data._id;
         // loggedUser.id = loggedUser.self.substring(loggedUser.self.lastIndexOf('/') + 1);

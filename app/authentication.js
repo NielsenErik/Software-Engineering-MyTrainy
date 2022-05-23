@@ -15,14 +15,14 @@ router.post('', login = async function(req, res) {
 	// user not found
 	if (!user) {
 		console.log('Authentication failed. User not found.')
-		res.json({ success: false, message: 'Authentication failed. User not found.' });
+		res.json({ success: false, message: 'Authentication failed. User not found.' }).status(400);
 		return;
 	}
 	
 	// check if password matches
 	if (user.password != req.body.password) {
 		console.log('Authentication failed. Wrong password.')
-		res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+		res.json({ success: false, message: 'Authentication failed. Wrong password.' }).status(401);
 		return;
 	}
 	
@@ -46,7 +46,7 @@ router.post('', login = async function(req, res) {
 		email: user.email,
 		id: user._id,
 		self: "api/v1/" + user._id
-	});
+	}).status(200);
 	console.log('Login avvenuto')
 
 });

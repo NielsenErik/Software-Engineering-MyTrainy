@@ -13,6 +13,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    
+    environment: production
+    
+    env:
+      SUPER_SECRET: ${{ secrets.SUPER_SECRET }} # Must be set as a GitHub secret
+      DB_URL: ${{ secrets.DB_URL }} # Must be set as a GitHub secret
 
     strategy:
       matrix:

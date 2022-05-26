@@ -12,7 +12,7 @@ Due tipologie:
 * allenatore
 
 Crea un nuovo utente che può accedere alla piattaforma. 
-Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gli sono concesse.
+In base alla tipologia di utente, egli potrà eseguire tutte le operazioni che gli sono concesse.
 
 + Request (application/json)
 
@@ -58,7 +58,7 @@ Poi in base alla tipologia di utente, potrà eseguire tutte le operazioni che gl
 
 ### Autenticazione utente [POST]
 
-All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di esso e la correttezza della password per poter effettuare il login.
+All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di esso nel DataBase e si controlla la correttezza della password per poter effettuare il login.
     
 + Request (application/json)
 
@@ -111,7 +111,7 @@ All'inserimento delle credenziali dell'utente, si va a cercare l'esistenza di es
 
 ### Ritorna tutte le schede di un utente [GET] 
 
-Richiede al database tutte le schede di allenamento dell'utente autenticato, sfruttando il campo userId negli attributi della scheda, controllando che corrisponda all'id dell'utente. 
+Richiede al database tutte le schede di allenamento dell'utente autenticato, sfruttando il campo 'userId' negli attributi della scheda, controllando che corrisponda all'id dell'utente. 
 
 + Request (application/json)
 
@@ -146,7 +146,7 @@ Richiede al database tutte le schede di allenamento dell'utente autenticato, sfr
 
 ### Creazione di una nuova scheda [POST]
 
-L'utente crea una nuova scheda e viene aggiornato il database
+L'utente crea una nuova scheda e viene aggiornato il database.
 
 + Request (application/json)
 
@@ -184,7 +184,7 @@ L'utente crea una nuova scheda e viene aggiornato il database
 
 ### Ritorna una scheda nello specifico [GET]
 
-Richiede al database una scheda specifica selezionata dall'utente
+Richiede al database una scheda specifica selezionata dall'utente.
 
 + Request (application/json)
 

@@ -19,10 +19,21 @@ module.exports = mongoose.model('Card', new Schema({
         minlength: 1
   },
   date: {
-        type: String,
-        required: [true, 'Please provide date'],
-        minlength:1
+      type: String,
+      required: [true, 'Please provide date'],
+      minlength: 1
   },
+
+  /*date: {
+        type: Date,
+        required: [true, 'Please provide date'],
+        validator: function (v) {
+            return (
+              v && // check that there is a date object
+              v.getTime() > Date.now()
+            );
+          },
+  },*/
   comment: {
         type: String,
   },

@@ -6,7 +6,9 @@ const authentication = require('./authentication.js');
 const tokenChecker = require('./tokenchecker.js');
 const cards = require('./card.js');
 const users = require('./user.js');
-const usersCard =require('./getCard.js')
+const usersCard =require('./getCard.js');
+const program = require('./program.js');
+const userProgram = require('./getPrograms');
 
  app.use(express.json());
  app.use(express.urlencoded({ extended: true }));
@@ -27,10 +29,11 @@ app.use((req,res,next) => {
 app.use('/api/v1/authentications', authentication);
 app.use('/api/v1/users/me', tokenChecker);
 app.use('/api/v1/users', users);
-app.use('/api/v1/userCards', usersCard);
-app.use('/api/v1/card', cards); 
+app.use('/api/v1/userCards', usersCard); //get all cards
+app.use('/api/v1/card', cards); //other methods for card
+app.use('/api/v1/program', program);
+app.use('/api/v1/userPrograms', userProgram); //get all programs
 
-console.log('')
 
 app.use((req, res) => {
     res.status(404);

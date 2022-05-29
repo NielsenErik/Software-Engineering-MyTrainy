@@ -5,7 +5,7 @@ const Card = require('./models/card');
 const router = express.Router();
 const User = require('./models/user'); // get our mongoose model
 
-// get all Cards
+// get single Card
 
 router.get('/:id', async (req, res, next) =>{
     console.log("in single Cards")
@@ -15,15 +15,10 @@ router.get('/:id', async (req, res, next) =>{
         return next(createCustomError('No card with id : ${cardID}', 404))
     }
     res.status(200).json({cardSelected});
-   // res.send('get single Card')
 })
 
-
-
-//get single Card
-
-
 //create Card
+
 router.post('/:userId', async (req, res, next) =>{
     const {userId: userID} = req.params
     let checkUser = await User.find({userId:userID})
@@ -44,6 +39,7 @@ router.post('/:userId', async (req, res, next) =>{
 })
 
 //update Card
+
 router.patch('/:id', async (req, res, next) =>{
     const {id: cardID} = req.params
     const cardSelected = await Card.findByIdAndUpdate({_id:cardID}, req.body, {
@@ -57,10 +53,10 @@ router.patch('/:id', async (req, res, next) =>{
 })
 
 //delete Card
+
 router.delete('/:id', async (req, res, next) =>{
     const {id: cardID} = req.params
-    const cardSelected = await
-    Card.findOneAndDelete({_id: cardID})
+    const cardSelected = await Card.findOneAndDelete({_id: cardID})
     if(!cardSelected){
         return next(createCustomError('No card with id : ${cardID', 404))
     }

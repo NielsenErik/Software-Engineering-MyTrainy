@@ -53,7 +53,7 @@ router.patch('/:id', async (req, res, next) =>{
     if(!cardSelected){
         return next(createCustomError('No card with id : ${cardID', 404))
     }   
-    res.status(200).json({cardSelected})
+    res.json(cardSelected.title + " "+ cardSelected.comment).status(200)
 })
 
 //delete Card

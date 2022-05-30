@@ -18,5 +18,14 @@ describe('GET /api/v1/card', () =>{
         mongoose.connection.close(true);
         console.log("Database connection closed");
     });
+    test('GET /api/v1/card/:id should respond with json', async () => {
+        return request(app)
+          .get('/api/v1/card/6288a2d208ccd92fe2584db8')
+          .expect('Content-Type', /json/)
+          .expect(200, {
+              self: '/api/v1/card/6288a2d208ccd92fe2584db8',
+              title: 'Software Engineering'
+            });
+      });
 
 });

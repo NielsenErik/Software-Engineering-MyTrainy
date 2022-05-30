@@ -64,7 +64,7 @@ describe('POST /api/v1/users', () =>{
     let connection;
 
     beforeAll( async () => {
-        jest.setTimeout(8000);
+        jest.setTimeout(15000);
         jest.unmock('mongoose');
         connection = await  mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
         console.log('Database connected!');

@@ -34,7 +34,7 @@ function App() {
           setPage(<CalendarPage/>);
         }
       })
-  }, [""]);
+  }, []);
 
   // const [data, setData] = useState(null);
   // useEffect(() =>{

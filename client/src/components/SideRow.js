@@ -3,14 +3,25 @@ import react from "react";
 // Import Icons
 import ReactDOM from 'react-dom'
 
-const SideRow = ({title}) =>{
+const SideRow = ({title, obj}) =>{
 
     const editHandler = () =>{
         console.log("Edit handler");
     }
 
-    const deleteHandler = () =>{
-        console.log("Delete handler");
+    const deleteHandler = (e) =>{
+        // alert(`title: ${title} id: ${obj.self}`)
+        e.preventDefault();
+        fetch('http://localhost:3000'+obj.self, {
+            method: "DELETE",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(),
+        })
+        .then(function(data){
+            alert(`Card ${title}:${obj.self} deleted`)
+            window.location.reload()
+        })
+        .catch(error => alert(error))
     }
     return(
         <div>

@@ -32,6 +32,7 @@ app.use('/api/v1/users/me', tokenChecker);
 app.use('/api/v1/users/me', tokenAPI);
 app.use('/api/v1/users', users);
 app.use('/api/v1/userCards', usersCard); //get all cards
+// app.use('/api/v1/userCards', tokenAPI);
 app.use('/api/v1/card', cards); //other methods for card
 app.use('/api/v1/program', program);
 app.use('/api/v1/userPrograms', userProgram); //get all programs

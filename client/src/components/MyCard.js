@@ -8,7 +8,8 @@ import {programs, cards} from "../files/programs"
 import MySmallCard from "./MySmallCard";
 
 const MyCard = ({eventKey, obj, type}) =>{
-
+    // console.log(`obj in my card:`);
+    // console.log(obj);
     return(
             <Tab.Pane eventKey={eventKey}>
                 <Card style={{ width: '100%', height: "90vh", overflowY: "scrool" }}>
@@ -40,7 +41,7 @@ const MyCard = ({eventKey, obj, type}) =>{
                             <Form.Control 
                                 as="textarea" 
                                 rows={3} 
-                                defaultValue={obj.description}
+                                defaultValue={obj.comment}
                                 onChange={(e) => {
                                     // console.log(e.target.value);
                                     

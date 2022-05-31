@@ -12,10 +12,10 @@ const CalendarPage = () =>{
     /* Array of objects which contains
     [i]
         {
-            date,
-            self,
-            sport,
-            title,
+            date: data da svolgere l'allenamento,
+            self: penso sia l'id, non serve per ora,
+            sport: sport riguardante la scheda,
+            title: titolo della scheda,
         }
     */
 

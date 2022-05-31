@@ -30,7 +30,7 @@ const ProgCardPage = () => {
         <>
             <MyNavbar />
             <Container>
-                <Sidebar userCards={userCards} />
+                <Sidebar userCards={userCards} setUserCards={setUserCards}/>
             </Container>
             
         </>

@@ -21,6 +21,9 @@ router.get('/:userId', async function(req, res){
             title: dbEntry.title,
             sport: dbEntry.sport,
             date: dbEntry.date,
+            // Aggiunta da Nick
+            // id: dbEntry.id,
+            comment: dbEntry.comment,
         };
     });
     console.log("return from cards")

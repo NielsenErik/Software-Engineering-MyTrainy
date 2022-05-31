@@ -1,8 +1,8 @@
-import React from "react";
+import React,{useState} from "react";
 // import LibrarySong from "./LibrarySong";
 
 // Import react-bootstrap
-import {Tab, Row, Col, Nav, Container, Button} from "react-bootstrap"
+import {Tab, Row, Col, Nav, Button, Modal, Form} from "react-bootstrap"
 
 // Import Components
 import SideRow from "./SideRow";
@@ -12,15 +12,45 @@ import MyCard from "./MyCard";
 import {programs, cards} from "../files/programs"
 
 
-const Sidebar = ({userCards}) =>{
+const Sidebar = ({userCards, setUserCards}) =>{
+
+    const user = JSON.parse(window.localStorage.getItem("user"))
 
     var programCounter = 0;
     var programCounterPane = 0;
     var cardCounter = 0;
     var cardCounterPane = 0;
+
+    const [titleCard, setTitleCard] = useState();
+    const [sport, setSport] = useState();
+    const [comment, setComment] = useState();
+    const [date, setDate] = useState();
+
+    // Alert state
+    const [show, setShow] = useState(false);
+
+    // alert handlers
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     
     const addComponent = (type) =>{
         console.log(`Aggiungere un componente di tipo ${type}`);
+    }
+
+    const addCardHandler = (e) =>{
+        e.preventDefault();
+        fetch('http://localhost:3000/api/v1/card/'+user, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify( { userId: user, title: titleCard, sport: sport, date:date, comment: comment } ),
+        })
+            .then((resp) => resp.json())
+            .then(function(data){
+                // 
+                console.log(data);
+                handleClose();
+            })
+            .catch( error => console.error(error) );
     }
 
     // console.log(userCards);
@@ -55,10 +85,43 @@ const Sidebar = ({userCards}) =>{
                                     <Button 
                                         variant="primary" 
                                         style={{padding: "0.3rem", color:"white"}}
-                                        
+                                        onClick={handleShow}
                                     >
                                         Add
                                     </Button>
+                                    <Modal show={show} onHide={handleClose}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Nuova Scheda di allenamento</Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <Form onSubmit={addCardHandler}>
+                                                    <Form.Group className="mb-3 mt-5" controlId="formBasicEmail">
+                                                        <Form.Label>Title</Form.Label>
+                                                        <Form.Control type="text" placeholder="Title" onChange={(e) => setTitleCard(e.target.value)}/>
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                                        <Form.Label>Sport</Form.Label>
+                                                        <Form.Control type="text" placeholder="Sport" onChange={(e) => setSport(e.target.value)}/>
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                                        <Form.Label>Date</Form.Label>
+                                                        <Form.Control type="text" placeholder="Date" onChange={(e) => setDate(e.target.value)}/>
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                                        <Form.Label>Comment</Form.Label>
+                                                        <Form.Control type="text" placeholder="Comment" onChange={(e) => setComment(e.target.value)}/>
+                                                    </Form.Group>
+                                                </Form>
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button variant="secondary" onClick={handleClose}>
+                                                    Close
+                                                </Button>
+                                                <Button variant="primary" onClick={addCardHandler}>
+                                                    Create
+                                                </Button>
+                                            </Modal.Footer>
+                                    </Modal>
                                 </div>
                                 <div style={{height: "50vh", overflow: "scroll"}}>
                                         <div className="d-flex align-items-center pe-0 ms-2">
@@ -69,7 +132,8 @@ const Sidebar = ({userCards}) =>{
                                         userCards.map((card) =>(
                                             <Nav.Item>
                                                 <Nav.Link eventKey={`card${++cardCounter}`}>
-                                                    <SideRow title={card.title} />
+                                                    <SideRow title={card.title} obj={card}/>
+                                                    {/* {console.log(card)} */}
                                                 </Nav.Link>
                                             </Nav.Item>
                                         ))

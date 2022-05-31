@@ -1,0 +1,29 @@
+
+
+
+.rbc-event, .rbc-day-slot .rbc-background-event{
+    background-color: #B15F5F !important;
+}
+
+
+.rbc-show-more{
+    color: #B15F5F !important;
+}
+
+.rbc-today{
+    background-color: #b15f5f4a !important;
+}
+
+.sidebar{
+    display: inline-block;
+
+}
+.sidebar-control{
+    display: inline-block;
+
+}
+
+
+@import 'react-big-calendar/lib/sass/styles';
+@import 'react-big-calendar/lib/addons/dragAndDrop/styles'; // if using DnD
+@import 'Custom';

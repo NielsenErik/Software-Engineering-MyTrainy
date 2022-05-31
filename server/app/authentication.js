@@ -6,12 +6,14 @@ require('dotenv').config()
 
 
 router.post('', login = async function(req, res) {
+	console.log(req.body)
 	// find the user
 	let user = await User.findOne({
 		email: req.body.email
 	}).exec();
 	
-	
+	console.log(`var user: ${user}`);
+
 	// user not found
 	if (!user) {
 		console.log('Authentication failed. User not found.')

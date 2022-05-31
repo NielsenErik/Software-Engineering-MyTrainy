@@ -1,6 +1,6 @@
 require('dotenv').config();
 require('express-async-errors');
-const app = require('./app/app.js');
+const app = require('./app/app');
 const mongoose = require('mongoose');
 const connectDB = require('./db/connect');
 

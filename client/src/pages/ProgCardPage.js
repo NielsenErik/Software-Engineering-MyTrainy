@@ -25,7 +25,7 @@ const ProgCardPage = () => {
                     // console.log(data);
                     setUserCards(data)
                 })
-    })
+    }, [])
     return(
         <>
             <MyNavbar />

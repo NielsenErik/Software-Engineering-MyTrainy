@@ -28,7 +28,7 @@ app.use((req,res,next) => {
 })
 
 app.use('/api/v1/authentications', authentication);
-app.use('', tokenChecker);
+app.use('/api/v1/users/me', tokenChecker);
 app.use('/api/v1/users/me', tokenAPI);
 app.use('/api/v1/users', users);
 app.use('/api/v1/userCards', usersCard); //get all cards

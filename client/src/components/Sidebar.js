@@ -38,6 +38,7 @@ const Sidebar = ({userCards, setUserCards}) =>{
     }
 
     const addCardHandler = (e) =>{
+        console.log(user);
         e.preventDefault();
         fetch('http://localhost:3000/api/v1/card/'+user, {
             method: "POST",
@@ -47,7 +48,7 @@ const Sidebar = ({userCards, setUserCards}) =>{
             .then((resp) => resp.json())
             .then(function(data){
                 // 
-                console.log(data);
+                // console.log(data);
                 handleClose();
             })
             .catch( error => console.error(error) );

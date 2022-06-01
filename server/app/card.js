@@ -26,14 +26,16 @@ router.post('/:userId', async (req, res, next) =>{
         return next(createCustomError('No logged user yet', 500))
     }
     let newCard = await Card.create(req.body)
-    newCard = newCard.map( (dbEntry) => {
+    console.log(newCard);
+    // newCard = newCard.map( (dbEntry) => {
         return {
-            self: '/api/v1/card/' + dbEntry.id,
-            title: dbEntry.title,
-            sport: dbEntry.sport,
-            date: dbEntry.date
+            self: '/api/v1/card/' + newCard.id,
+            title: newCard.title,
+            sport: newCard.sport,
+            date: newCard.date,
+            comment: newCard.comment,
         };
-    });
+    // });
     console.log("return from POST cards")
     res.status(200).json(newCard);
 })

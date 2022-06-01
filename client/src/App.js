@@ -61,6 +61,7 @@ function App() {
           <Route path="/prog-card-dash" exact element={<ProgCardPage />} />
           <Route path="/diary" exact element={<DiaryPage />} />
           <Route path="/courses" exact element={<CoursesPage />} />
+          <Route path="/home" exact element={<MyTrainyHome />} />
         </Routes>
       </Router>
       

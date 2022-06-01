@@ -3,7 +3,7 @@ import react from "react";
 // Import Icons
 import ReactDOM from 'react-dom'
 
-const SideRow = ({title, obj}) =>{
+const SideRow = ({title, obj, counter, setLastCreated, type}) =>{
 
     // const editHandler = (e) =>{
     //     e.preventDefault()
@@ -36,7 +36,12 @@ const SideRow = ({title, obj}) =>{
     }
     return(
         <div>
-            <div style={{display: "inline-block"}}>
+            <div style={{display: "inline-block"}} onClick={
+                (e) =>{
+                    // console.log(counter);
+                    setLastCreated(`${type}${counter}`)
+                }
+            }>
                 <p>{title}</p>
             </div>
             <div style={{display: "inline-block"}}>

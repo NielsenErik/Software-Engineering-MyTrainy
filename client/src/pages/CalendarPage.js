@@ -4,9 +4,17 @@ import MyNavbar from "../components/MyNavbar";
 import MyCalendar from "../components/MyCalendar";
 import useLocalStorage from '../useLocalStorage';
 
-const CalendarPage = () =>{
+import MyTrainyHome from "./MyTrainyHome";
 
+import { useNavigate } from "react-router-dom";
+
+const CalendarPage = ({token}) =>{
+
+    const navigate = useNavigate()
     const user = JSON.parse(window.localStorage.getItem("user"))
+    const userToken = JSON.parse(window.localStorage.getItem("token"))
+
+    var logged;
 
     const [userCards, setUserCards] = useState();
     /* Array of objects which contains
@@ -21,6 +29,17 @@ const CalendarPage = () =>{
 
     useEffect(() =>{
         // console.log("Use Effect activated");
+        fetch("http://localhost:3000/api/v1/users/me?token="+userToken)
+        .then(resp => resp.json())
+        .then(data => {
+            // console.log(data);
+            logged = data.success
+            if(data.success === false){
+                navigate('/login')
+                window.location.reload()
+            }
+        })
+        .catch((error) => {console.log("Errore richiesta token");console.log(error)})
         // Get all User's cards
         fetch(`http://localhost:3000/api/v1/userCards/${user}`, {
                     method: 'GET',

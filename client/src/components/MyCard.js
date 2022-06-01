@@ -7,7 +7,7 @@ import { render } from "react-dom";
 import {programs, cards} from "../files/programs"
 import MySmallCard from "./MySmallCard";
 
-const MyCard = ({eventKey, obj, type}) =>{
+const MyCard = ({eventKey, obj, type, counter}) =>{
     // console.log(`obj in my card:`);
     // console.log(obj);
     const user = JSON.parse(window.localStorage.getItem("user"))
@@ -23,6 +23,7 @@ const MyCard = ({eventKey, obj, type}) =>{
         .then(function(data){
             // console.log(data);
             window.location.reload()
+            
         })
     }
 
@@ -96,6 +97,7 @@ const MyCard = ({eventKey, obj, type}) =>{
                                 defaultValue={description}
                                 onChange={(e) => setDescription(e.target.value)}
                             />
+                            {/* <Form.Label className="mt-3">Card counter: {counter}</Form.Label> */}
                         </Form>
                         <Card.Subtitle className="mt-2 text-muted">
                             {type == "program" ? <p>Schede</p> : ""}

@@ -1,5 +1,5 @@
-import React,{useState} from "react";
-// import LibrarySong from "./LibrarySong";
+import React,{useState, useEffect} from "react";
+import useLocalStorage from '../useLocalStorage';
 
 // Import react-bootstrap
 import {Tab, Row, Col, Nav, Button, Modal, Form} from "react-bootstrap"
@@ -25,6 +25,7 @@ const Sidebar = ({userCards, setUserCards}) =>{
     const [sport, setSport] = useState();
     const [comment, setComment] = useState();
     const [date, setDate] = useState();
+    const [lastCreated, setLastCreated] = useLocalStorage(user, `card1`)
 
     // Alert state
     const [show, setShow] = useState(false);
@@ -32,33 +33,45 @@ const Sidebar = ({userCards, setUserCards}) =>{
     // alert handlers
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    var isCardCreated = true;
     
     const addComponent = (type) =>{
         console.log(`Aggiungere un componente di tipo ${type}`);
     }
 
     const addCardHandler = (e) =>{
-        console.log(user);
+        console.log("dentro addHandler")
         e.preventDefault();
         fetch('http://localhost:3000/api/v1/card/'+user, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify( { userId: user, title: titleCard, sport: sport, date:date, comment: comment } ),
         })
-            .then((resp) => resp.json())
+            // .then((resp) => resp.json())
             .then(function(data){
                 // 
                 // console.log(data);
-                handleClose();
+                console.log("dentro il then, chiusura popup")
+                
             })
-            .catch( error => console.error(error) );
+            .catch( error => {console.error(error); isCardCreated = false});
+            console.log("fine addHandler")
+            if(isCardCreated){
+                handleClose()
+                window.location.reload()
+                setLastCreated(`card${++cardCounter}`)
+            }
     }
+
+    useEffect(() =>{
+
+    }, [])
 
     // console.log(userCards);
     return(
         <>
             <div style={{height: "90vh", width: "100%"}}>
-                <Tab.Container id="program-and-cards">
+                <Tab.Container id="program-and-cards" defaultActiveKey={lastCreated}>
                     <Row>
                         <Col md={3} xs={12}>
                             <Nav variant="pills" className="flex-column">
@@ -133,8 +146,13 @@ const Sidebar = ({userCards, setUserCards}) =>{
                                         userCards.map((card) =>(
                                             <Nav.Item>
                                                 <Nav.Link eventKey={`card${++cardCounter}`}>
-                                                    <SideRow title={card.title} obj={card}/>
-                                                    {/* {console.log(card)} */}
+                                                    <SideRow 
+                                                        title={card.title} 
+                                                        obj={card} 
+                                                        counter={cardCounter} 
+                                                        setLastCreated={setLastCreated}
+                                                        type="card"
+                                                    />
                                                 </Nav.Link>
                                             </Nav.Item>
                                         ))
@@ -162,6 +180,7 @@ const Sidebar = ({userCards, setUserCards}) =>{
                                                 eventKey={`card${++cardCounterPane}`}
                                                 type="card"
                                                 obj={card}
+                                                counter={cardCounterPane}
                                             />
                                     ))
                                     :

@@ -2,13 +2,22 @@ import react,{useState} from "react";
 
 import { Navbar, Container,NavDropdown, Nav, Button, Modal } from "react-bootstrap"
 
+import { useNavigate } from "react-router-dom";
+
 
 const MyNavbar = () =>{
+    const navigate = useNavigate();
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const logOutHandler = (e) =>{
+        e.preventDefault()
+        window.localStorage.clear()
+        navigate('/')
+        // window.location.reload()
+    }
 
     return(
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
@@ -25,7 +34,12 @@ const MyNavbar = () =>{
                         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
                         <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        <NavDropdown.Item href="/home" onClick={(e) =>{
+                            e.preventDefault()
+                            window.localStorage.clear()
+                            navigate('/home')
+                            // window.location.reload()
+                        }}>LogOut</NavDropdown.Item>
                     </NavDropdown>
                     <Button className="text-light" onClick={handleShow}>Nuovo</Button>
 

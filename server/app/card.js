@@ -26,7 +26,7 @@ router.post('/:userId', async (req, res, next) =>{
         return next(createCustomError('No logged user yet', 500))
     }
     let newCard = await Card.create(req.body)
-    console.log(newCard);
+    // console.log(newCard);
     // newCard = newCard.map( (dbEntry) => {
         return {
             self: '/api/v1/card/' + newCard.id,

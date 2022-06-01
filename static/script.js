@@ -71,7 +71,7 @@ function loadCard(){
     .then(function(data) {
         data.forEach(el => {
             var opt = document.createElement('option');
-            var training = el.title +"  |   "+el.sport+"  |  "+el.date + "  |  "+ el.self
+            var training = el.title +"  |   "+el.sport+"  |  "+el.startDate + "  |  "+"  |  "+el.endDate + "  |  "+ el.self
             opt.innerHTML = training;
             opt.value = el._id;
             document.getElementById("myCards").appendChild(opt);
@@ -83,12 +83,13 @@ function createNewTraining(){
     console.log("in script.js")
     var title = document.getElementById("title").value;
     var sport = document.getElementById("sport").value;
-    var date = document.getElementById("date").value;
+    var startDate = document.getElementById("startdate").value;
+    var endDate = document.getElementById("enddate").value;
     var comment = document.getElementById("comment").value;
     fetch('../api/v1/card/'+loggedUser.id, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify( { userId: loggedUser.id, title: title, sport: sport, date:date, comment: comment } ),
+        body: JSON.stringify( { userId: loggedUser.id, title: title, sport: sport, startDate:startDate, endDate:endDate, comment: comment } ),
     }).then(function(data) { 
         
         var opt = document.createElement('option');

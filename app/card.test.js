@@ -20,7 +20,7 @@ describe('GET /api/v1/card', () =>{
     });
     test('GET /api/v1/card/:id should respond with json', async () => {
         return request(app)
-          .get('/api/v1/card/628f2b7c8b114032e2fac34a')
+          .get('/api/v1/card/62975531e88da222550069ac')
           .expect('Content-Type', /json/)
           .expect(200);
       });

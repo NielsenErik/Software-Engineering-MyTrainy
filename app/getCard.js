@@ -20,7 +20,8 @@ router.get('/:userId', async function(req, res){
             self: '/api/v1/card/' + dbEntry.id,
             title: dbEntry.title,
             sport: dbEntry.sport,
-            date: dbEntry.date,
+            startDate: dbEntry.startDate,
+            endDate: dbEntry.endDate,
         };
     });
     console.log("return from cards")

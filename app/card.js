@@ -31,7 +31,8 @@ router.post('/:userId', async (req, res, next) =>{
             self: '/api/v1/card/' + dbEntry.id,
             title: dbEntry.title,
             sport: dbEntry.sport,
-            date: dbEntry.date
+            startDate: dbEntry.startDate,
+            endDate: dbEntry.endDate,
         };
     });
     console.log("return from POST cards")

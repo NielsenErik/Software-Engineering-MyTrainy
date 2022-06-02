@@ -28,13 +28,7 @@ router.post('/:userId', async (req, res, next) => {
         return next(createCustomError('No logged user yet', 500))
     }
     let newProgram = await Program.create(req.body)
-    newProgram = newProgram.map ((dbEntry) => {
-        return{
-            self: '/api/v1/program/' +dbEntry.id,
-            title: dbEntry.title,
-            sport: dbEntry.sport
-        };
-    });
+    console.log(newProgram)
     console.log('return from POST programs')
     res.status(200).json(newProgram);
 })

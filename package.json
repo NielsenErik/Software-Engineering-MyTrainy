@@ -1,0 +1,22 @@
+{
+  "name": "software-engineering-mytrainy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cd server && jest --setupFiles dotenv/config"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NielsenErik/Software-Engineering-MyTrainy.git"
+  },
+  "author": "Erik Nielsen, Giulia Panozzo, Nicola Gianuzzi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NielsenErik/Software-Engineering-MyTrainy/issues"
+  },
+  "homepage": "https://github.com/NielsenErik/Software-Engineering-MyTrainy#readme",
+  "dependencies": {
+    "jest": "^28.1.0"
+  }
+}

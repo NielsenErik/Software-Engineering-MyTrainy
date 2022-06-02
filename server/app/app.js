@@ -17,13 +17,14 @@ const tokenAPI = require('./tokenAPI');
  const notFoundMiddleware = require('../middleware/not-found');
 const errorHandlerMiddleware = require('../middleware/error-handler');
 
-app.use('/', express.static(process.env.FRONTEND || 'static'));
+
 app.use('/', express.static('static')); 
 
 
 
 app.use((req,res,next) => {
     console.log(req.method + ' ' + req.url)
+    res.status(200)
     next()
 })
 

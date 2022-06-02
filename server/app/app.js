@@ -7,8 +7,8 @@ const tokenChecker = require('./tokenchecker.js');
 const cards = require('./card.js');
 const users = require('./user.js');
 const usersCard =require('./getCard.js');
+const usersProgram = require('./getPrograms.js');
 const program = require('./program.js');
-const userProgram = require('./getPrograms');
 const tokenAPI = require('./tokenAPI');
 
  app.use(express.json());
@@ -37,7 +37,7 @@ app.use('/api/v1/userCards', usersCard); //get all cards
 // app.use('/api/v1/userCards', tokenAPI);
 app.use('/api/v1/card', cards); //other methods for card
 app.use('/api/v1/program', program);
-app.use('/api/v1/userPrograms', userProgram); //get all programs
+app.use('/api/v1/userPrograms', usersProgram); //get all programs
 
 
 app.use((req, res) => {

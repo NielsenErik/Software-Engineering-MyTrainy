@@ -20,10 +20,5 @@ module.exports = mongoose.model('Program', new Schema({
         required: [true, 'Please provide sport'],
         minlength: 1
   },
-  card:{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: Card,
-      default: undefined
-  }
 
 }));

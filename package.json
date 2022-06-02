@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/NielsenErik/Software-Engineering-MyTrainy#readme",
   "dependencies": {
+    "dotenv": "^16.0.1",
     "jest": "^28.1.0"
   }
 }

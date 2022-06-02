@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cd server && jest --setupFiles dotenv/config"
+    "test": "jest --setupFiles dotenv/config"
   },
   "repository": {
     "type": "git",

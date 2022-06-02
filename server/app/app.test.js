@@ -7,4 +7,6 @@ test('GET / should return 404', () => {
     return request(app)
     .get('/')
     .expect(404);
+
 });
+

@@ -8,6 +8,8 @@ import MyTrainyHome from "./MyTrainyHome";
 
 import { useNavigate } from "react-router-dom";
 
+
+
 const CalendarPage = ({token}) =>{
 
     const navigate = useNavigate()
@@ -55,7 +57,7 @@ const CalendarPage = ({token}) =>{
     return(
         <div className="calendar-page">
             <MyNavbar/>
-            <MyCalendar />
+            <MyCalendar userCards={userCards}/>
         </div>
     )
 }

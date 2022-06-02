@@ -6,5 +6,5 @@ const app = require('./app');
 test('GET / should return 200', () => {
     return request(app)
     .get('/')
-    .expect(200);
+    .expect(404);
 });

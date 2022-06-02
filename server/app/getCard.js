@@ -24,8 +24,11 @@ router.get('/:userId', async function(req, res){
             sport: dbEntry.sport,
             startDate: dbEntry.startDate,
             endDate: dbEntry.endDate,
+<<<<<<< HEAD:server/app/getCard.js
             comment: dbEntry.comment,
             color: dbEntry.color,
+=======
+>>>>>>> origin:app/getCard.js
         };
     });
     console.log("return from cards")

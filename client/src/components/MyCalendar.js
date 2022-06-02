@@ -118,8 +118,8 @@ const MyCalendar = ({userCards}) => {
         userCards
         ?
         userCards.map((card) =>{
-          var i = 0;
-          events.push(({id: ++i, title: card.title, allDay: true, start: card.startDate, end: card.endDate}))
+          // var i = 0;
+          events.push(({id: card.id, title: card.title, allDay: true, start: card.startDate, end: card.endDate}))
         })
         :
         console.log(events)
@@ -133,7 +133,17 @@ const MyCalendar = ({userCards}) => {
         step={60}
         // onDrillDown={}
         onDoubleClickEvent={(e) =>{
-          alert()
+          // console.log(e)
+          fetch('http://localhost:3000/api/v1/card/'+e.id, {
+            method: "GET",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(),
+          })
+          .then((resp) => resp.json())
+          .then(function(data){
+            // console.log(data);
+            alert(`carta selezionata : ${data.cardSelected.title}`)
+          })
         }}
         />
     </Container>

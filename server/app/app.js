@@ -9,6 +9,7 @@ const users = require('./user.js');
 const usersCard =require('./getCard.js');
 const program = require('./program.js');
 const userProgram = require('./getPrograms');
+const tokenAPI = require('./tokenAPI');
 
  app.use(express.json());
  app.use(express.urlencoded({ extended: true }));
@@ -28,8 +29,11 @@ app.use((req,res,next) => {
 
 app.use('/api/v1/authentications', authentication);
 app.use('/api/v1/users/me', tokenChecker);
+app.use('/api/v1/users/me', tokenAPI);
 app.use('/api/v1/users', users);
 app.use('/api/v1/userCards', usersCard); //get all cards
+// Aggiunta da Nick
+// app.use('/api/v1/userCards', tokenAPI);
 app.use('/api/v1/card', cards); //other methods for card
 app.use('/api/v1/program', program);
 app.use('/api/v1/userPrograms', userProgram); //get all programs
@@ -37,6 +41,7 @@ app.use('/api/v1/userPrograms', userProgram); //get all programs
 
 app.use((req, res) => {
     res.status(404);
+    
     res.json({ error: 'Not found' });
 });
 

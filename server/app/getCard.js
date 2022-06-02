@@ -14,13 +14,20 @@ router.get('/:userId', async function(req, res){
     if(!userCard){
         return next(createCustomError('No card for user with id:'+req.params, 404))
     }
+    
 
     userCard = userCard.map( (dbEntry) => {
         return {
             self: '/api/v1/card/' + dbEntry.id,
             title: dbEntry.title,
             sport: dbEntry.sport,
-            date: dbEntry.date,
+            startDate: dbEntry.startDate,
+            endDate: dbEntry.endDate,
+<<<<<<< HEAD:server/app/getCard.js
+            comment: dbEntry.comment,
+            color: dbEntry.color,
+=======
+>>>>>>> origin:app/getCard.js
         };
     });
     console.log("return from cards")

@@ -1,6 +1,7 @@
 const express = require('express');
 const res = require('express/lib/response');
 const { createCustomError } = require('../errors/custom-error');
+const { db } = require('./models/card');
 const Card = require('./models/card');
 const router = express.Router();
 const User = require('./models/user'); // get our mongoose model
@@ -26,14 +27,24 @@ router.post('/:userId', async (req, res, next) =>{
         return next(createCustomError('No logged user yet', 500))
     }
     let newCard = await Card.create(req.body)
-    newCard = newCard.map( (dbEntry) => {
+    // newCard = newCard.map( (dbEntry) => {
         return {
+<<<<<<< HEAD:server/app/card.js
+            self: '/api/v1/card/' + newCard.id,
+            title: newCard.title,
+            sport: newCard.sport,
+            startDate: newCard.startDate,
+            endDate: newCard.endDate,
+            color: newCard.color,
+=======
             self: '/api/v1/card/' + dbEntry.id,
             title: dbEntry.title,
             sport: dbEntry.sport,
-            date: dbEntry.date
+            startDate: dbEntry.startDate,
+            endDate: dbEntry.endDate,
+>>>>>>> origin:app/card.js
         };
-    });
+    // });
     console.log("return from POST cards")
     res.status(200).json(newCard);
 })
@@ -49,7 +60,15 @@ router.patch('/:id', async (req, res, next) =>{
     if(!cardSelected){
         return next(createCustomError('No card with id : ${cardID', 404))
     }   
-    res.json(cardSelected.title + " "+ cardSelected.comment).status(200)
+    // res.json(cardSelected.title + " "+ cardSelected.comment).status(200)
+    res.json({
+        title: cardSelected.title,
+        sport: cardSelected.sport,
+        startDate: cardSelected.startDate,
+        endDate: cardSelected.endDate,
+        comment: cardSelected.comment,
+        color: cardSelected.color,
+    }).status(200)
 })
 
 //delete Card
@@ -66,7 +85,3 @@ router.delete('/:id', async (req, res, next) =>{
 
 
 module.exports = router
-
-
-
-

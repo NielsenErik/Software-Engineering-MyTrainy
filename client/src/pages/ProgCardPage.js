@@ -1,4 +1,6 @@
-import react,{useEffect, useState} from "react";
+// Fetch per ottenere tutte le Cards (GET)
+
+import React,{useEffect, useState} from "react";
 import { Container } from "react-bootstrap";
 
 // Import Components
@@ -22,6 +24,7 @@ const ProgCardPage = () => {
                     })
                 .then((resp) => resp.json())
                 .then(function(data) {
+                    // console.log(`Data: ${data}`);
                     // console.log(data);
                     setUserCards(data)
                 })

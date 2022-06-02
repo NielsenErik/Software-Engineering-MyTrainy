@@ -1,4 +1,4 @@
-import react,{useState, useEffect} from "react";
+import React,{useState, useEffect} from "react";
 
 import MyNavbar from "../components/MyNavbar";
 import MyCalendar from "../components/MyCalendar";
@@ -13,8 +13,6 @@ const CalendarPage = ({token}) =>{
     const navigate = useNavigate()
     const user = JSON.parse(window.localStorage.getItem("user"))
     const userToken = JSON.parse(window.localStorage.getItem("token"))
-
-    var logged;
 
     const [userCards, setUserCards] = useState();
     /* Array of objects which contains
@@ -33,7 +31,6 @@ const CalendarPage = ({token}) =>{
         .then(resp => resp.json())
         .then(data => {
             // console.log(data);
-            logged = data.success
             if(data.success === false){
                 navigate('/login')
                 window.location.reload()

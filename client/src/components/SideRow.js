@@ -1,26 +1,13 @@
-import react from "react";
+// Fetch per eliminare una Card (DELETE)
+
+import React from "react";
 
 // Import Icons
 import ReactDOM from 'react-dom'
 
 const SideRow = ({title, obj, counter, setLastCreated, type}) =>{
 
-    // const editHandler = (e) =>{
-    //     e.preventDefault()
-    //     fetch('http://localhost:3000'+obj.self, {
-    //         method: "PATCH",
-    //         headers: { 'Content-Type': 'application/json' },
-    //         body: JSON.stringify(),
-    //     })
-    //     .then((resp) => resp.json()) // Transform the data into json
-    //     .then(function(data){
-
-    //     })
-        
-    // }
-
     const deleteHandler = (e) =>{
-        // alert(`title: ${title} id: ${obj.self}`)
         e.preventDefault()
         fetch('http://localhost:3000'+obj.self, {
             method: "DELETE",

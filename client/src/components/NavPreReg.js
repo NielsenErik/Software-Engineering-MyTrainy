@@ -1,3 +1,4 @@
+import React from "react"
 import { Navbar, Container,NavDropdown, Nav, Button } from "react-bootstrap"
 
 const NavPreReg = () =>{

@@ -12,29 +12,26 @@ module.exports = mongoose.model('Card', new Schema({
         type: String,
         required: [true, 'Please provide card Title'],
         minlength: 1
-  },
-  sport: {
-        type: String,
-        required: [true, 'Please provide sport'],
-        minlength: 1
-  },
-  date: {
-      type: String,
-      required: [true, 'Please provide date'],
-      minlength: 1
-  },
+      },
+      sport: {
+            type: String,
+            required: [true, 'Please provide sport'],
+            minlength: 1
+      },
 
-  /*date: {
-        type: Date,
-        required: [true, 'Please provide date'],
-        validator: function (v) {
-            return (
-              v && // check that there is a date object
-              v.getTime() > Date.now()
-            );
-          },
-  },*/
-  comment: {
-        type: String,
-  },
+      startDate: {
+            type: Date,
+            required: [true, 'Please provide start date'],
+      },
+      endDate: {
+            type: Date,
+            required: [true, 'Please provide end date'],
+            },
+      comment: {
+            type: String,
+      },
+      color: {
+            type: String,
+      }
+
 }));

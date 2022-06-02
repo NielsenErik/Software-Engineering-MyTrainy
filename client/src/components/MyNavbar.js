@@ -1,4 +1,4 @@
-import react,{useState} from "react";
+import React,{useState} from "react";
 
 import { Navbar, Container,NavDropdown, Nav, Button, Modal } from "react-bootstrap"
 

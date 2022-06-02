@@ -1,5 +1,5 @@
 
-import react from "react";
+import React from "react"
 import { Container } from "react-bootstrap";
 
 import MyNavbar from "../components/MyNavbar";

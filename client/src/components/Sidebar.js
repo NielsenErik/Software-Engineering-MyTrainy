@@ -1,5 +1,10 @@
+// Fetch per aggiungere una Card (POST)
+
 import React,{useState, useEffect} from "react";
 import useLocalStorage from '../useLocalStorage';
+
+import { DateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from '@date-io/date-fns'; // choose your lib
 
 // Import react-bootstrap
 import {Tab, Row, Col, Nav, Button, Modal, Form} from "react-bootstrap"
@@ -24,8 +29,9 @@ const Sidebar = ({userCards, setUserCards}) =>{
     const [titleCard, setTitleCard] = useState();
     const [sport, setSport] = useState();
     const [comment, setComment] = useState();
-    const [date, setDate] = useState();
+    // const [date, setDate] = useState();
     const [lastCreated, setLastCreated] = useLocalStorage(user, `card1`)
+    const [newColor, setNewColor] = useState("#000000")
 
     // Alert state
     const [show, setShow] = useState(false);
@@ -34,40 +40,41 @@ const Sidebar = ({userCards, setUserCards}) =>{
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     var isCardCreated = true;
-    
-    const addComponent = (type) =>{
-        console.log(`Aggiungere un componente di tipo ${type}`);
-    }
 
+    const [newStartDate, setNewStartDate] = useState(new Date())
+    const [newEndDate, setNewEndDate] = useState(newStartDate)
+    
+    // const addComponent = (type) =>{
+    //     console.log(`Aggiungere un componente di tipo ${type}`);
+    // }
+
+    // Add new Card
     const addCardHandler = (e) =>{
         console.log("dentro addHandler")
         e.preventDefault();
         fetch('http://localhost:3000/api/v1/card/'+user, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify( { userId: user, title: titleCard, sport: sport, date:date, comment: comment } ),
+            body: JSON.stringify( { userId: user, title: titleCard, sport: sport, startDate: newStartDate, endDate: newEndDate,  comment: comment, color: newColor,} ),
         })
             // .then((resp) => resp.json())
             .then(function(data){
                 // 
                 // console.log(data);
-                console.log("dentro il then, chiusura popup")
+                // console.log("dentro il then, chiusura popup")
                 
             })
             .catch( error => {console.error(error); isCardCreated = false});
             console.log("fine addHandler")
             if(isCardCreated){
                 handleClose()
+                setNewColor("#000000")
                 window.location.reload()
                 setLastCreated(`card${++cardCounter}`)
             }
+            
     }
 
-    useEffect(() =>{
-
-    }, [])
-
-    // console.log(userCards);
     return(
         <>
             <div style={{height: "90vh", width: "100%"}}>
@@ -117,9 +124,34 @@ const Sidebar = ({userCards, setUserCards}) =>{
                                                         <Form.Label>Sport</Form.Label>
                                                         <Form.Control type="text" placeholder="Sport" onChange={(e) => setSport(e.target.value)}/>
                                                     </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formBasicColor">
+                                                        <Form.Label className="mb-0" htmlFor="exampleColorInput">Colore:</Form.Label>
+                                                        <Form.Control style={{display: "inline-block"}}
+                                                            type="color"
+                                                            id="exampleColorInput"
+                                                            defaultValue={newColor}
+                                                            onChange={(e) =>{setNewColor(e.target.value)}}
+                                                            title="Choose your color"
+                                                        />
+                                                    </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formBasicPassword">
-                                                        <Form.Label>Date</Form.Label>
-                                                        <Form.Control type="text" placeholder="Date" onChange={(e) => setDate(e.target.value)}/>
+
+                                                        <div className="d-flex justify-items-center align-items-center" style={{display: "block"}}>
+                                                            Start:
+                                                            <div className="mb-4 ms-2 justify-items-center align-items-center">
+                                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                                    <DateTimePicker label="Start" value={newStartDate} onChange={(date) =>{setNewStartDate(date); setNewEndDate(date)}} showTodayButton/>
+                                                                </MuiPickersUtilsProvider>
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex justify-items-center align-items-center" style={{display: "block"}}>
+                                                            End:
+                                                            <div className="ms-2 justify-items-center align-items-center">
+                                                                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                                                    <DateTimePicker label="End" value={newEndDate} onChange={setNewEndDate}/>
+                                                                </MuiPickersUtilsProvider>
+                                                            </div>  
+                                                        </div>
                                                     </Form.Group>
                                                     <Form.Group className="mb-3" controlId="formBasicPassword">
                                                         <Form.Label>Comment</Form.Label>
@@ -138,27 +170,26 @@ const Sidebar = ({userCards, setUserCards}) =>{
                                     </Modal>
                                 </div>
                                 <div style={{height: "50vh", overflow: "scroll"}}>
-                                        <div className="d-flex align-items-center pe-0 ms-2">
-                                    </div>
-                                    {
-                                        userCards 
-                                        ? 
-                                        userCards.map((card) =>(
-                                            <Nav.Item>
-                                                <Nav.Link eventKey={`card${++cardCounter}`}>
-                                                    <SideRow 
-                                                        title={card.title} 
-                                                        obj={card} 
-                                                        counter={cardCounter} 
-                                                        setLastCreated={setLastCreated}
-                                                        type="card"
-                                                    />
-                                                </Nav.Link>
-                                            </Nav.Item>
-                                        ))
-                                        :
-                                        ""
-                                    }
+                                        {/* <div className="d-flex align-items-center pe-0 ms-2"></div> */}
+                                        {
+                                            userCards 
+                                            ? 
+                                            userCards.map((card) =>(
+                                                <Nav.Item>
+                                                    <Nav.Link eventKey={`card${++cardCounter}`}>
+                                                        <SideRow 
+                                                            title={card.title} 
+                                                            obj={card} 
+                                                            counter={cardCounter} 
+                                                            setLastCreated={setLastCreated}
+                                                            type="card"
+                                                        />
+                                                    </Nav.Link>
+                                                </Nav.Item>
+                                            ))
+                                            :
+                                            ""
+                                        }
                                 </div>
                             </Nav>
                         </Col>
@@ -181,6 +212,7 @@ const Sidebar = ({userCards, setUserCards}) =>{
                                                 type="card"
                                                 obj={card}
                                                 counter={cardCounterPane}
+                                                setUserCards={setUserCards}
                                             />
                                     ))
                                     :

@@ -19,13 +19,13 @@ router.get('/:userId', async function(req, res){
     userCard = userCard.map( (dbEntry) => {
         return {
             self: '/api/v1/card/' + dbEntry.id,
+            id: dbEntry.id,
             title: dbEntry.title,
             sport: dbEntry.sport,
             startDate: dbEntry.startDate,
             endDate: dbEntry.endDate,
             comment: dbEntry.comment,
             color: dbEntry.color,
-
         };
     });
     console.log("return from cards")

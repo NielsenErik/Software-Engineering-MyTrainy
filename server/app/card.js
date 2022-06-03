@@ -38,9 +38,7 @@ router.post('/:userId', async (req, res, next) =>{
             startDate: newCard.startDate,
             endDate: newCard.endDate,
             color: newCard.color,
-
         };
-    // });
 })
     
 

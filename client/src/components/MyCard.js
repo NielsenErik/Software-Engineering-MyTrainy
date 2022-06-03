@@ -24,7 +24,7 @@ const MyCard = ({eventKey, obj, type, counter, setUserCards}) =>{
     // Aggiornare la Card
     const updateCard = (e) =>{
         e.preventDefault()
-        fetch('http://localhost:3000'+obj.self, {
+        fetch('http://localhost:3000/api/v1/card/'+obj.id, {
             method: "PATCH",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -46,7 +46,7 @@ const MyCard = ({eventKey, obj, type, counter, setUserCards}) =>{
             setDescription(data.comment)
             setColor(data.color)
             alert("Modifica avvenuta con successo")
-            alert(color)
+            // alert(color)
             window.location.reload()
         })
         .catch(error => console.log(error))
@@ -60,7 +60,7 @@ const MyCard = ({eventKey, obj, type, counter, setUserCards}) =>{
     const [endDate, setEndDate] = useState(obj.endDate)
 
     const [color, setColor] = useState(obj.color)
-    console.log(`title: ${title} color: ${color}`);
+    // console.log(`title: ${title} color: ${color}`);
   
     return(
             <Tab.Pane eventKey={eventKey}>
@@ -121,7 +121,7 @@ const MyCard = ({eventKey, obj, type, counter, setUserCards}) =>{
                                     type="color"
                                     id="exampleColorInput"
                                     defaultValue={color}
-                                    onChange={(e) =>{setColor(e.target.value); console.log(color)}}
+                                    onChange={(e) =>{setColor(e.target.value)}}
                                     title="Choose your color"
                                 />
                             </Col>

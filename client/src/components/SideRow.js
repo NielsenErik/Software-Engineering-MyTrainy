@@ -9,7 +9,7 @@ const SideRow = ({title, obj, counter, setLastCreated, type}) =>{
 
     const deleteHandler = (e) =>{
         e.preventDefault()
-        fetch('http://localhost:3000'+obj.self, {
+        fetch('http://localhost:3000/'+obj.self, {
             method: "DELETE",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(),

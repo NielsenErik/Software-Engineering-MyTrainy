@@ -17,7 +17,7 @@ const ProgCardPage = () => {
     const [userCards, setUserCards] = useState()
 
     useEffect(() =>{
-        fetch(`http://localhost:3000/api/v1/userCards/${user}`, {
+        fetch('http://localhost:3000/api/v1/userCards/'+user, {
                         method: 'GET',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(),

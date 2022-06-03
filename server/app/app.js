@@ -16,9 +16,11 @@ const tokenAPI = require('./tokenAPI');
  app.use(cors())
  const notFoundMiddleware = require('../middleware/not-found');
 const errorHandlerMiddleware = require('../middleware/error-handler');
+const path = require('path')
 
 
-app.use('/', express.static('static')); 
+
+app.use(express.static('static')); 
 
 
 

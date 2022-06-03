@@ -26,7 +26,7 @@ function App() {
   const [page, setPage] = useState(<MyTrainyHome />);
 
   useEffect(() =>{
-    fetch("http://localhost:3000/api/v1/users/me?token="+token)
+    fetch("/api/v1/users/me?token="+token)
       .then(resp => resp.json())
       .then(data => {
         // console.log(data);

@@ -20,7 +20,7 @@ const LoginPage = ({loggedUser , setLoggedUser, token, setToken, page, setPage})
     const authentication = (e) =>{
         e.preventDefault();
 
-        fetch('http://localhost:3000/api/v1/authentications', {
+        fetch('/api/v1/authentications', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify( { email: email, password: password } ),

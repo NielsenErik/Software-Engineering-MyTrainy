@@ -6,6 +6,7 @@ const Program = require('./models/program');
 const router = express.Router();
 const User = require('./models/user'); // get our mongoose model
 
+
 router.get('/:userId', async function(req, res){
     console.log('in Programs')
     const{userId :userID} = req.params
@@ -17,7 +18,9 @@ router.get('/:userId', async function(req, res){
         return{
             self: '/api/v1/program/' + dbEntry.id,
             title: dbEntry.title,
-            sport: dbEntry.sport
+            sport: dbEntry.sport,
+            color: dbEntry.color,
+            comment: dbEntry.comment,
         };
     })
     console.log('return from programs')

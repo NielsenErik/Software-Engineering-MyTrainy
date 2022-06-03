@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react"
+import React,{useState, useEffect, useMemo} from "react"
 import { Calendar, momentLocalizer, Views,  } from 'react-big-calendar'
 import moment from 'moment'
 import 'moment-timezone'
@@ -108,6 +108,10 @@ const myEventsList = [
 
 const MyCalendar = ({userCards}) => {
   
+  const {defaultDate} = useMemo(() => ({
+    defaultDate: new Date(2015, 3, 13)
+  }), [])
+  
   var events = []
   // console.log(userCards);
 
@@ -126,6 +130,7 @@ const MyCalendar = ({userCards}) => {
       }
         <Calendar
         localizer={localizer}
+        defaultDate={defaultDate}
         events={events}
         startAccessor="start"
         endAccessor="end"

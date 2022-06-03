@@ -44,7 +44,12 @@ router.patch('/:id', async (req, res, next) =>{
     if(!programSelected){
         return next(createCustomError('No program with id : ${programID}', 404))
     }
-    res.status(200).json({programSelected})
+    res.status(200).json({
+        title: programSelected.title,
+        sport: programSelected.sport,
+        color: programSelected.color,
+        comment: programSelected.comment,
+    })
     console.log('ProgramSelected updated')
 })
 

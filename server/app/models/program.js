@@ -6,10 +6,10 @@ var Schema = mongoose.Schema;
 // set up a mongoose model
 
 module.exports = mongoose.model('Program', new Schema({ 
-    userId:{
-        type: String,
-        required: [true, 'Please login'],
-      },
+  userId:{
+      type: String,
+      required: [true, 'Please login'],
+    },
 	title: {
         type: String,
         required: [true, 'Please provide program Title'],
@@ -20,11 +20,12 @@ module.exports = mongoose.model('Program', new Schema({
         required: [true, 'Please provide sport'],
         minlength: 1
   },
-  card:{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: Card,
-      default: undefined
-  }
-  
+  color: {
+    type: String,
+  },
+  comment: {
+    type: String,
+    minlength: 1,
+  },
 
 }));

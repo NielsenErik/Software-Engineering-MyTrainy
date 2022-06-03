@@ -1,9 +1,8 @@
 const express = require('express');
 const res = require('express/lib/response');
 const { createCustomError } = require('../errors/custom-error');
-const { db } = require('./models/card');
-const Program = require('./models/card');
-const user = require('./models/user');
+const Card = require('./models/card');
+const Program = require('./models/program');
 const router = express.Router();
 const User = require('./models/user'); // get our mongoose model
 

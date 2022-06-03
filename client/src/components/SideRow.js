@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom'
 
 const SideRow = ({title, obj, counter, setLastCreated, type}) =>{
 
-    const deleteHandler = (e) =>{
+    const deleteCardHandler = (e) =>{
         e.preventDefault()
         console.log(obj.self);
         fetch('http://localhost:3000'+obj.self, {
@@ -17,11 +17,26 @@ const SideRow = ({title, obj, counter, setLastCreated, type}) =>{
         })
         .then((resp) => resp.json()) // Transform the data into json
         .then(function(data){
-            alert(`Card ${title}:${obj.self} deleted`)
+            alert(`Card ${title}:${obj.title} deleted`)
             window.location.reload()
         })
         .catch(error => alert(error))
     }
+
+    const deleteProgramHandler = () =>{
+        // console.log("programDeleteHandler");
+        fetch('http://localhost:3000'+obj.self, {
+            method: "DELETE",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(),
+        })
+        .then((resp) => resp.json())
+        .then(function(data){
+            alert(`Program ${title}:${obj.title} deleted`)
+            window.location.reload()
+        })
+    }
+
     return(
         <div>
             <div style={{display: "inline-block"}} onClick={
@@ -33,8 +48,20 @@ const SideRow = ({title, obj, counter, setLastCreated, type}) =>{
                 <p>{title}</p>
             </div>
             <div style={{display: "inline-block"}}>
-                {/* <i className="bi bi-pencil-square" style={{cursor: "pointer"}} onClick={editHandler}></i> */}
-                <i className="bi bi-trash3" style={{cursor: "pointer"}} onClick={deleteHandler}></i>
+                {
+                    type === 'card'
+                    ?
+                    <i className="bi bi-trash3" style={{cursor: "pointer"}} onClick={deleteCardHandler}></i>
+                    :
+                    ""
+                }
+                {
+                    type === 'program'
+                    ?
+                    <i className="bi bi-trash3" style={{cursor: "pointer"}} onClick={deleteProgramHandler}></i>
+                    :
+                    ""
+                }
             </div>
         </div>
     )

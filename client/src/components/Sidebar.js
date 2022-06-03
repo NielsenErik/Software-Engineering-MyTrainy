@@ -14,10 +14,11 @@ import SideRow from "./SideRow";
 import MyCard from "./MyCard";
 
 // Import data
-import {programs, cards} from "../files/programs"
+import {programs, cards} from "../files/programs" 
+import ProgramCard from "./ProgramCard";
 
 
-const Sidebar = ({userCards, setUserCards}) =>{
+const Sidebar = ({userCards, setUserCards, userPrograms, setUserPrograms}) =>{
 
     const user = JSON.parse(window.localStorage.getItem("user"))
 
@@ -26,32 +27,47 @@ const Sidebar = ({userCards, setUserCards}) =>{
     var cardCounter = 0;
     var cardCounterPane = 0;
 
+    // New Card Info
     const [titleCard, setTitleCard] = useState();
     const [sport, setSport] = useState();
-    const [comment, setComment] = useState();
-    // const [date, setDate] = useState();
-    const [lastCreated, setLastCreated] = useLocalStorage(user, `card1`)
     const [newColor, setNewColor] = useState("#000000")
+    const [comment, setComment] = useState();
 
+    // New Program Info
+    const [titleProgram, setTitleProgram] = useState()
+    const [programSport, setProgramSport] = useState()
+    const [newProgramColor, setNewProgramColor] = useState()
+    const [programComment, setProgramComment] = useState()
+
+    // const [date, setDate] = useState();
+    const [lastCreated, setLastCreated] = useLocalStorage(user, "")
+    
     // Alert state
     const [show, setShow] = useState(false);
+    const [programShow, setProgramShow] = useState(false)
+    
 
-    // alert handlers
+
+    // alert card handlers
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    var isCardCreated = true;
 
+    // alert program handlers
+    const programHandleClose = () => setProgramShow(false)
+    const programHandleShow = () => setProgramShow(true)
+    
+    
     const [newStartDate, setNewStartDate] = useState(new Date())
     const [newEndDate, setNewEndDate] = useState(newStartDate)
     
     // const addComponent = (type) =>{
-    //     console.log(`Aggiungere un componente di tipo ${type}`);
-    // }
-
+        //     console.log(`Aggiungere un componente di tipo ${type}`);
+        // }
     // Add new Card
+    var isCardCreated = true;
     const addCardHandler = (e) =>{
-        console.log("dentro addHandler")
-        e.preventDefault();
+        // console.log("dentro addHandler")
+        e.preventDefault()
         fetch('http://localhost:3000/api/v1/card/'+user, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
@@ -70,9 +86,28 @@ const Sidebar = ({userCards, setUserCards}) =>{
                 handleClose()
                 setNewColor("#000000")
                 window.location.reload()
-                setLastCreated(`card${++cardCounter}`)
-            }
-            
+                // setLastCreated(`card${++cardCounter}`)
+            }      
+    }
+    // Add new Program
+    const addProgramHandler = (e) =>{
+        e.preventDefault()
+        // alert("Create Program")
+        fetch('http://localhost:3000/api/v1/program/'+user, {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({userId: user, title: titleProgram, sport: programSport, color: newProgramColor, comment: programComment})
+        })
+        .then((resp) => resp.json())
+        .then(function(data){
+            console.log(data.title)
+            handleClose()
+            // alert(`program ${data.title} created`)
+            setNewColor("#000000")
+            window.location.reload()
+                // setLastCreated(`program${++programCounter}`)
+        })
+        .catch(error => alert(error))
     }
 
     return(
@@ -87,19 +122,74 @@ const Sidebar = ({userCards, setUserCards}) =>{
                                     <Button 
                                         variant="primary" 
                                         style={{padding: "0.3rem", color:"white"}}
-                                        
+                                        onClick={programHandleShow}
                                     >
                                         Add
                                     </Button>
+                                    <Modal show={programShow} onHide={programHandleClose}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Nuovo Programma di allenamento</Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <Form onSubmit={addProgramHandler}>
+                                                    <Form.Group className="mb-3 mt-5" controlId="formBasicEmail">
+                                                        <Form.Label>Title</Form.Label>
+                                                        <Form.Control type="text" placeholder="Title" onChange={(e) => setTitleProgram(e.target.value)}/>
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                                        <Form.Label>Sport</Form.Label>
+                                                        <Form.Control type="text" placeholder="Sport" onChange={(e) => setProgramSport(e.target.value)}/>
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formBasicColor">
+                                                        <Form.Label className="mb-0" htmlFor="exampleColorInput">Colore:</Form.Label>
+                                                        <Form.Control style={{display: "inline-block"}}
+                                                            type="color"
+                                                            id="exampleColorInput"
+                                                            defaultValue={newColor}
+                                                            onChange={(e) =>{setNewProgramColor(e.target.value)}}
+                                                            title="Choose your color"
+                                                        />
+                                                    </Form.Group>
+                                                    <Form.Group className="mb-3" controlId="formBasicPassword">
+                                                        <Form.Label>Comment</Form.Label>
+                                                        <Form.Control type="text" placeholder="Comment" onChange={(e) => setProgramComment(e.target.value)}/>
+                                                    </Form.Group>
+                                                </Form>
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button variant="secondary" onClick={handleClose}>
+                                                    Close
+                                                </Button>
+                                                <Button variant="primary" onClick={addProgramHandler}>
+                                                    Create
+                                                </Button>
+                                            </Modal.Footer>
+                                    </Modal>
+
                                 </div>
                                 <div style={{maxHeight: "50vh", overflow: "scroll"}}>
                                     <div style={{display: "inline-flex"}}>
                                     </div>
-                                    {programs.map((program) =>(
-                                        <Nav.Item>
-                                            <Nav.Link eventKey={`program${++programCounter}`}><SideRow title={program.title} /></Nav.Link>
-                                        </Nav.Item>
-                                    ))}
+                                    {
+                                        userPrograms
+                                        ?
+                                        // console.log(userPrograms)
+                                        userPrograms.map((program) =>(
+                                            <Nav.Item>
+                                                <Nav.Link eventKey={`program${++programCounter}`}>
+                                                    <SideRow 
+                                                        title={program.title} 
+                                                        obj={program} 
+                                                        counter={programCounter} 
+                                                        setLastCreated={setLastCreated}
+                                                        type="program"
+                                                    />
+                                                </Nav.Link>
+                                            </Nav.Item>
+                                        ))
+                                        :
+                                        ""
+                                    }
                                 </div>
                                 <div style={{display: "inline-flex"}}>
                                     <h3>Schede</h3>
@@ -167,7 +257,7 @@ const Sidebar = ({userCards, setUserCards}) =>{
                                                     Create
                                                 </Button>
                                             </Modal.Footer>
-                                    </Modal>
+                                        </Modal>
                                 </div>
                                 <div style={{height: "50vh", overflow: "scroll"}}>
                                         {/* <div className="d-flex align-items-center pe-0 ms-2"></div> */}
@@ -196,13 +286,18 @@ const Sidebar = ({userCards, setUserCards}) =>{
                         <Col xs={12} md={9}>
                             <Tab.Content>
                                 {
-                                programs.map((program) =>(
-                                    <MyCard
-                                        eventKey={`program${++programCounterPane}`}
-                                        obj={program}
-                                        type="program"
-                                    />
-                                ))}
+                                    userPrograms
+                                    ?
+                                    // console.log(userPrograms)
+                                    userPrograms.map((program) =>(
+                                        <ProgramCard 
+                                            eventKey={`program${++programCounterPane}`}
+                                            obj={program}
+                                        />
+                                    ))
+                                    :
+                                    ""
+                                }
                                 {
                                     userCards
                                     ?

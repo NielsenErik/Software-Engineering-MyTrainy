@@ -4,6 +4,8 @@ import { Navbar, Container,NavDropdown, Nav, Button, Modal } from "react-bootstr
 
 import { useNavigate } from "react-router-dom";
 
+import logo from '../media/logo.svg'
+
 
 const MyNavbar = () =>{
     const navigate = useNavigate();
@@ -44,7 +46,13 @@ const MyNavbar = () =>{
     return(
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Container>
-            <Navbar.Brand href="/calendar">MyTrainy</Navbar.Brand>
+            {/* <Navbar.Brand href="/calendar">MyTrainy</Navbar.Brand> */}
+            <Navbar.Brand href="/calendar">
+                <img src={logo} alt="logo" style={{
+                    maxWidth: "50%",
+                    maxHeight: "50%"
+                }}/>
+            </Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="ms-auto">

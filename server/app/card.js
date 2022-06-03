@@ -72,7 +72,7 @@ router.delete('/:id', async (req, res, next) =>{
     if(!cardSelected){
         return next(createCustomError('No card with id : ${cardID', 404))
     }
-    res.status(200).json({cardSelected})
+    return res.status(200).json({cardSelected})
     
 })
 

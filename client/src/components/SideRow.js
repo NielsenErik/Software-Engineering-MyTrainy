@@ -9,7 +9,9 @@ const SideRow = ({title, obj, counter, setLastCreated, type}) =>{
 
     const deleteCardHandler = (e) =>{
         e.preventDefault()
+
         console.log(obj.self);
+
         fetch('http://localhost:3000'+obj.self, {
             method: "DELETE",
             headers: { 'Content-Type': 'application/json' },

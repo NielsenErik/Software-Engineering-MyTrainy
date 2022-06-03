@@ -7,7 +7,7 @@ describe('GET /api/v1/card', () =>{
     let connection;
 
     beforeAll( async () => {
-        jest.setTimeout(8000);
+        jest.setTimeout(15000);
         jest.unmock('mongoose');
         connection = await  mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
         console.log('Database connected!');
@@ -24,5 +24,10 @@ describe('GET /api/v1/card', () =>{
           .expect('Content-Type', /json/)
           .expect(200);
       });
-
-});
+    test('GET /api/v1/card/ should respond with 404', async () => {
+        return request(app)
+          .get('/api/v1/card/')
+          .expect('Content-Type', /json/)
+          .expect(404);
+      });
+    });

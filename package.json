@@ -6,7 +6,7 @@
   "scripts": {
     "test": "cd server && jest --setupFiles dotenv/config",
     "start": "cd server && npm start",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "cd client && npm start"
   },
   "repository": {
     "type": "git",

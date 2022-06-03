@@ -28,6 +28,9 @@ router.post('/:userId', async (req, res, next) =>{
     }
     let newCard = await Card.create(req.body)
     // newCard = newCard.map( (dbEntry) => {
+        console.log("return from POST cards")
+    res.status(200).json(newCard);
+
         return {
             self: '/api/v1/card/' + newCard.id,
             title: newCard.title,
@@ -36,10 +39,8 @@ router.post('/:userId', async (req, res, next) =>{
             endDate: newCard.endDate,
             color: newCard.color,
         };
-    // });
-    console.log("return from POST cards")
-    res.status(200).json(newCard);
 })
+    
 
 //update Card
 

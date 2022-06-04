@@ -4,6 +4,8 @@ import { Navbar, Container,NavDropdown, Nav, Button, Modal } from "react-bootstr
 
 import { useNavigate } from "react-router-dom";
 
+import useLocalStorage from '../useLocalStorage';
+
 import logo from '../media/logo.svg'
 
 
@@ -13,8 +15,7 @@ const MyNavbar = () =>{
     // User info
     const user = JSON.parse(window.localStorage.getItem("user"))
     const [email, setEmail] = useState()
-    const [type, setType] = useState()
-
+    const [type, setType] = useLocalStorage('type', "")
 
     const [show, setShow] = useState(false);
 

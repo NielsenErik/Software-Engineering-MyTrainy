@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cd server && jest --setupFiles dotenv/config",
-    "start": "cd server && npm start",
-    "heroku-postbuild": "cd client && npm start"
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -29,5 +28,8 @@
     "mongoose": "^6.3.5",
     "nodemon": "^2.0.16",
     "supertest": "^6.2.3"
+  },
+  "devDependencies": {
+    "concurrently": "^7.2.1"
   }
 }

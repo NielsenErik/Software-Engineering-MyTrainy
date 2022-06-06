@@ -27,7 +27,6 @@ describe('GET /api/v1/card', () =>{
     test('GET /api/v1/card/ should respond with 404', async () => {
         return request(app)
           .get('/api/v1/card/')
-          .expect('Content-Type', /json/)
           .expect(404);
       });
     });

@@ -5,6 +5,8 @@ import { Navbar, Container,NavDropdown, Nav, Button, Modal } from "react-bootstr
 import { useNavigate } from "react-router-dom";
 
 import useLocalStorage from '../useLocalStorage';
+import { HashLink as Link } from 'react-router-hash-link';
+
 
 import logo from '../media/logo.svg'
 
@@ -57,9 +59,15 @@ const MyNavbar = () =>{
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="ms-auto">
-                    <Nav.Link href="/prog-card-dash">Programmi</Nav.Link>
-                    <Nav.Link href="/courses">Corsi</Nav.Link>
-                    <Nav.Link href="/diary">Diario</Nav.Link>
+                    <Link to="/prog-card-dash">
+                        <Nav.Link href="#">Programmi</Nav.Link>
+                    </Link>
+                    <Link to="/courses">
+                        <Nav.Link href="#">Corsi</Nav.Link>
+                    </Link>
+                    <Link to="/diary">
+                        <Nav.Link href="#">Diario</Nav.Link>
+                    </Link>
                     <NavDropdown title="Profilo" id="collasible-nav-dropdown">
                         <NavDropdown.Item style={{cursor: "text"}}>
                             {

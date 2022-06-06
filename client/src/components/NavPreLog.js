@@ -1,6 +1,6 @@
 import React from "react"
 import { Navbar, Container,NavDropdown, Nav, Button } from "react-bootstrap"
-import { Link } from "react-router-dom";
+import { HashLink as Link } from 'react-router-hash-link';
 
 const NavPreLog = () =>{
     return(
@@ -10,7 +10,9 @@ const NavPreLog = () =>{
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ms-auto">
-                        <Nav.Link to="/">About Us</Nav.Link>
+                        <Link to="/">
+                            <Nav.Link to="#">About Us</Nav.Link>
+                        </Link>
                         <div style={{paddingRight:"1rem"}}>
                             <Link id="login" to="/login"><Button className="text-light">Accedi</Button></Link>
                         </div>

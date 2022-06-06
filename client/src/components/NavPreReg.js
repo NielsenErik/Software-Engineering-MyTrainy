@@ -1,5 +1,6 @@
 import React from "react"
 import { Navbar, Container,NavDropdown, Nav, Button } from "react-bootstrap"
+import { HashLink as Link } from 'react-router-hash-link';
 
 const NavPreReg = () =>{
     return(
@@ -9,8 +10,13 @@ const NavPreReg = () =>{
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ms-auto">
-                        <Nav.Link href="/info">info su MyTrainy</Nav.Link>
-                        <Nav.Link href="/about">About Us</Nav.Link>
+                        <Link to="/info">
+                            <Nav.Link href="#">info su MyTrainy</Nav.Link>
+                        </Link>
+                        <Link to = "/about">
+                            <Nav.Link href="#">About Us</Nav.Link>
+                        </Link>
+
                     </Nav>
                 </Navbar.Collapse>
             </Container>

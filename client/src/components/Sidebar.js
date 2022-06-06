@@ -85,7 +85,7 @@ const Sidebar = ({userCards, setUserCards, userPrograms, setUserPrograms}) =>{
             if(isCardCreated){
                 handleClose()
                 setNewColor("#000000")
-                //window.location.reload()
+                window.location.reload()
                 // setLastCreated(`card${++cardCounter}`)
             }      
     }

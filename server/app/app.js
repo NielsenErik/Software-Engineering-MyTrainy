@@ -49,7 +49,7 @@ app.use('/api/v1/program', program);
 app.use('/api/v1/userPrograms', usersProgram); //get all programs
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '../../client/build/index.html'))
+    res.sendFile(path.join(__dirname, '../../client/build/index.html'))
 })
 
 app.use((req, res) => {

@@ -19,7 +19,7 @@ const ProgCardPage = () => {
 
     useEffect(() =>{
 
-        fetch('/api/v1/userCards/'+user, {
+        fetch('../api/v1/userCards/'+user, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(),
@@ -31,7 +31,7 @@ const ProgCardPage = () => {
                 setUserCards(data)
             })
             .catch(error => console.log(error))
-        fetch('/api/v1/userPrograms/'+user, {
+        fetch('../api/v1/userPrograms/'+user, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(),

@@ -11,7 +11,7 @@ const ProgramCard = ({eventKey, obj}) =>{
 
     const upDateProgram = (e) =>{
         e.preventDefault()
-        fetch(''+obj.self,{
+        fetch('../'+obj.self,{
             method: "PATCH",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

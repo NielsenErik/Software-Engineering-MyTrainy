@@ -57,7 +57,7 @@ const RegistrationPage = ({loggedUser, setLoggedUser, setToken, setPage}) =>{
             return ;
         }
 
-        fetch('/api/v1/users', {
+        fetch('../api/v1/users', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify( { email: email, password: password, userType: userType[0].name } ),

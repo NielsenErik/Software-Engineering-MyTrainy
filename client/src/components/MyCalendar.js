@@ -107,10 +107,7 @@ const myEventsList = [
   
 
 const MyCalendar = ({userCards}) => {
-  
-  const {defaultDate} = useMemo(() => ({
-    defaultDate: new Date(2015, 3, 13)
-  }), [])
+
   
   var events = []
   // console.log(userCards);
@@ -130,7 +127,6 @@ const MyCalendar = ({userCards}) => {
       }
         <Calendar
         localizer={localizer}
-        defaultDate={defaultDate}
         events={events}
         startAccessor="start"
         endAccessor="end"
@@ -139,7 +135,7 @@ const MyCalendar = ({userCards}) => {
         // onDrillDown={}
         onDoubleClickEvent={(e) =>{
           // console.log(e)
-          fetch('/api/v1/card/'+e.id, {
+          fetch('../api/v1/card/'+e.id, {
             method: "GET",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(),

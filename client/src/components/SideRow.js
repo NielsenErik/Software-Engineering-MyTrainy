@@ -12,7 +12,7 @@ const SideRow = ({title, obj, counter, setLastCreated, type}) =>{
 
         console.log(obj.self);
 
-        fetch(''+obj.self, {
+        fetch('../'+obj.self, {
             method: "DELETE",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(),
@@ -27,7 +27,7 @@ const SideRow = ({title, obj, counter, setLastCreated, type}) =>{
 
     const deleteProgramHandler = () =>{
         // console.log("programDeleteHandler");
-        fetch(''+obj.self, {
+        fetch('../'+obj.self, {
             method: "DELETE",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(),

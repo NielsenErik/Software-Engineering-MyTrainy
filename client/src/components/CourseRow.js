@@ -20,7 +20,7 @@ const CourseRow = ({obj}) =>{
     const deleteCourse = (e) =>{
         e.preventDefault()
         // console.log(obj);
-        fetch(''+obj.self, {
+        fetch('../'+obj.self, {
             method: "DELETE",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(),
@@ -34,7 +34,7 @@ const CourseRow = ({obj}) =>{
     }
     const updateCourse = (e) =>{
         e.preventDefault()
-        fetch(''+obj.self, {
+        fetch('../'+obj.self, {
             method: "PATCH",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -58,7 +58,7 @@ const CourseRow = ({obj}) =>{
     }
     const getCourse = (e) =>{
         e.preventDefault()
-        fetch(''+obj.self, {
+        fetch('../'+obj.self, {
             method: "GET",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(),

@@ -29,7 +29,7 @@ app.use((req,res,next) => {
     next()
 })
 
-app.use('/',express.static(path.join(__dirname, '../client/build')))
+app.use('/',express.static(path.join(__dirname)))
 
 
 app.use('/api/v1/authentications', authentication);

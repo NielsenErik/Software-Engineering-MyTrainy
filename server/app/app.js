@@ -4,8 +4,13 @@ const cors = require('cors')
 
 const authentication = require('./authentication.js');
 const tokenChecker = require('./tokenchecker.js');
+
 const cards = require('./card.js');
 const users = require('./user.js');
+
+const courses = require('./course.js')
+const userCourses = require('./getCourse.js')
+
 const usersCard =require('./getCard.js');
 const usersProgram = require('./getPrograms.js');
 const program = require('./program.js');
@@ -40,6 +45,10 @@ app.use('/api/v1/userCards', usersCard); //get all cards
 
 // Aggiunta da Nick
 // app.use('/api/v1/userCards', tokenAPI);
+
+app.use('/api/v1/course', courses)
+app.use('/api/v1/userCourses', userCourses)
+
 app.use('/api/v1/card', cards); //other methods for card
 app.use('/api/v1/program', program);
 app.use('/api/v1/userPrograms', usersProgram); //get all programs

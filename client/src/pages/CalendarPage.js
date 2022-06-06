@@ -2,7 +2,7 @@ import React,{useState, useEffect} from "react";
 
 import MyNavbar from "../components/MyNavbar";
 import MyCalendar from "../components/MyCalendar";
-import useLocalStorage from '../useLocalStorage';
+
 
 import MyTrainyHome from "./MyTrainyHome";
 

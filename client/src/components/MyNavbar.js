@@ -5,6 +5,8 @@ import { Navbar, Container,NavDropdown, Nav, Button, Modal } from "react-bootstr
 import { useNavigate } from "react-router-dom";
 
 import useLocalStorage from '../useLocalStorage';
+import { HashLink as Link } from 'react-router-hash-link';
+
 
 import logo from '../media/logo.svg'
 
@@ -23,7 +25,7 @@ const MyNavbar = () =>{
     const handleShow = () => setShow(true);
 
     useEffect(() =>{
-        fetch('http://localhost:3000/api/v1/users/'+user,{
+        fetch('../api/v1/users/'+user,{
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(),
@@ -48,18 +50,26 @@ const MyNavbar = () =>{
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Container>
             {/* <Navbar.Brand href="/calendar">MyTrainy</Navbar.Brand> */}
-            <Navbar.Brand href="/calendar">
-                <img src={logo} alt="logo" style={{
-                    maxWidth: "50%",
-                    maxHeight: "50%"
-                }}/>
-            </Navbar.Brand>
+            <Link to="/calendar">
+                <Navbar.Brand href="#def">
+                    <img src={logo} alt="logo" style={{
+                        maxWidth: "50%",
+                        maxHeight: "50%"
+                    }}/>
+                </Navbar.Brand>
+            </Link>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="ms-auto">
-                    <Nav.Link href="/prog-card-dash">Programmi</Nav.Link>
-                    <Nav.Link href="/courses">Corsi</Nav.Link>
-                    <Nav.Link href="/diary">Diario</Nav.Link>
+                    <Link to="/prog-card-dash">
+                        <Nav.Link href="#def">Programmi</Nav.Link>
+                    </Link>
+                    <Link to="/courses">
+                        <Nav.Link href="#def">Corsi</Nav.Link>
+                    </Link>
+                    <Link to="/diary">
+                        <Nav.Link href="#def">Diario</Nav.Link>
+                    </Link>
                     <NavDropdown title="Profilo" id="collasible-nav-dropdown">
                         <NavDropdown.Item style={{cursor: "text"}}>
                             {

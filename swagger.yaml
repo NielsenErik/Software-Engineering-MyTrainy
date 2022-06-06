@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: '1.0'
   title: MyTrainy
-  description: API per usare la piattaforma MyTrainy, progetto di Ingengeria del Software UniTN 2022
+  description: API per usare la piattaforma MyTrainy, progetto di Ingegneria del Software UniTN 2022
   contact: {}
 host: mytrainy.herokuapp.com
 basePath: /

@@ -71,7 +71,7 @@ paths:
   /api/v1/authentications:
     post:
       description: >-
-        Fornendo le credenziali utente (email e password), si ottiene il tiken JWT necessario ad usufruire dei servizi autenticati dalla piattaforma.
+        Fornendo le credenziali utente (email e password), si ottiene il token JWT necessario ad usufruire dei servizi autenticati dalla piattaforma.
         
         + localStorage
           + access_token

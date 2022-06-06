@@ -29,8 +29,9 @@ app.use((req,res,next) => {
     next()
 })
 
-app.use(express.static(path.join(__dirname, '../../client/build')))
+app.use(express.static(path.join(__dirname, '../../client')))
 
+console.log(path.join(__dirname, '../../client'))
 
 app.use('/api/v1/authentications', authentication);
 app.use('/api/v1/users/me', tokenChecker);

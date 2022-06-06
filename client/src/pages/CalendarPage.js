@@ -29,7 +29,7 @@ const CalendarPage = ({token}) =>{
 
     useEffect(() =>{
         // console.log("Use Effect activated");
-        fetch("/api/v1/users/me?token="+userToken)
+        fetch("http://localhost:3000/api/v1/users/me?token="+userToken)
         .then(resp => resp.json())
         .then(data => {
             // console.log(data);

@@ -23,6 +23,8 @@ import makeAnimated from 'react-select/animated';
 
 const animatedComponents = makeAnimated()
 
+
+
 const RegistrationPage = ({loggedUser, setLoggedUser, setToken, setPage}) =>{
 
     const navigate = useNavigate()
@@ -44,7 +46,7 @@ const RegistrationPage = ({loggedUser, setLoggedUser, setToken, setPage}) =>{
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [checkPwd, setCheckPwd] = useState("");
-    const [type, setType] = useState(userType[0].name);
+
 
     
     // Registration function

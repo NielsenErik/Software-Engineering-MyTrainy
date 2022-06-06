@@ -706,6 +706,86 @@ paths:
               sport: 'programSelected.sport'
           headers: {}
           
+  /api/v1/userCourses/{userId}: 
+    get:
+      description: Richiede al database tutti i corsi dell'utente autenticato, sfruttando il campo 'userId' negli attributi della scheda, controllando che corrisponda all'id dell'utente.
+      summary: Ritorna tutti i corsi di un utente
+      operationId: Ritornatuttiicorsidiunutente
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        type: string
+        description: id dell'utente
+      responses:
+        '404':
+          description: Ritorna se non vengono trovati programmi per l'utente.
+          schema:
+            $ref: '#/definitions/Ritornatuttiicorsidiunutenteresponse1'
+          examples:
+            application/json:
+              error: 'No course for user with id: + req.params'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Ritornatuttiicorsidiunutenteresponse'
+          examples: 
+            application/json: 
+              self: '/api/v1/course/ + dbEntry.id'
+              id: 'dbEntry.id'
+              title: 'dbEntry.title'
+              sport: 'dbEntry.sport'
+              comment: 'dbEntry.comment'
+          headers: {}
+  
+  /api/v1/course/{userId}:
+    post:
+      description: L'utente crea un nuovo corso e viene aggiornato il database.
+      summary: Creazione di un nuovo corso
+      operationId: Creazionediunnuovocorso
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        type: string
+        description: id dello user 
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Creazionediunnuovocorsorequest'
+      responses:
+        '500':
+          description: Ritorna se l'utente non è ancora loggato nel sistema.
+          schema:
+            $ref: '#/definitions/Creazionediunnuovocorsoresponse1'
+          examples:
+            application/json:
+              error: 'No logged user yet'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Creazionediunnuovocorsoresponse'
+          examples: 
+            application/json:
+              self: '/api/v1/course/ + newCourse.id'
+              title: 'newCourse.title'
+              sport: 'newCourse.sport'
+              comment: 'newCourse.comment'
+          headers: {}  
           
           
 definitions:
@@ -1315,6 +1395,79 @@ definitions:
     example: 
       error: 'No program with id: ${programID}'
     type: object
+    properties: 
+      error: 
+        type: string
+    required: 
+      - error
+      
+  Ritornatuttiicorsidiunutenteresponse: 
+    title: Ritornatuttiicorsidiunutenteresponse
+    example: 
+      self: '/api/v1/course/ + dbEntry.id'
+      id: 'dbEntry.id'
+      title: 'dbEntry.title'
+      sport: 'dbEntry.sport'
+      comment: 'dbEntry.comment'
+    type: object 
+    properties: 
+      self: 
+        type: string
+      id: 
+        type: string
+      title:
+        type: string
+      sport: 
+        type: string
+      comment: 
+        type: string
+  Ritornatuttiicorsidiunutenteresponse1: 
+    title: Ritornatuttiicorsidiunutenteresponse1
+    example: 
+      error: 'No course for user with id + req.params'
+    properties: 
+      error: 
+        type: string
+    required: 
+      - error 
+      
+  Creazionediunnuovocorsorequest: 
+    title: Creazionediunnuovocorsorequest
+    properties: 
+      userId: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+      comment: 
+        type: string
+    required: 
+      - userId
+      - title
+      - sport
+  Creazionediunnuovocorsoresponse: 
+    title: Creazionediunnuovocorsoresponse
+    example: 
+      self: '/api/v1/course/ + newCourse.id'
+      title: 'newCourse.title'
+      sport: 'newCourse.sport'
+      comment: 'newCourse.comment'
+    type: object 
+    properties: 
+      self: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string 
+      comment: 
+        type: string
+  Creazionediunnuovocorsoresponse1:
+    title: Creazionediunnuovocorsoresponse1
+    example: 
+      error: 'No logged user yet'
+    type: object 
     properties: 
       error: 
         type: string

@@ -23,6 +23,7 @@ const tokenAPI = require('./tokenAPI');
 const errorHandlerMiddleware = require('../middleware/error-handler');
 const path = require('path')
 
+app.use(express.static(path.join(__dirname, '../client/build')))
 
 
 
@@ -50,6 +51,9 @@ app.use('/api/v1/card', cards); //other methods for card
 app.use('/api/v1/program', program);
 app.use('/api/v1/userPrograms', usersProgram); //get all programs
 
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/../client/build/index.html'))
+})
 
 app.use((req, res) => {
     res.status(404);

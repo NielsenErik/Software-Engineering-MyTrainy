@@ -29,7 +29,7 @@ app.use((req,res,next) => {
     next()
 })
 
-app.use('/',express.static(path.join(__dirname, '../../client/public')))
+app.use(express.static(path.join(__dirname, '../../client/build')))
 
 
 app.use('/api/v1/authentications', authentication);
@@ -49,7 +49,7 @@ app.use('/api/v1/program', program);
 app.use('/api/v1/userPrograms', usersProgram); //get all programs
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '../../client/public/index.html'))
+    res.sendFile(path.join(__dirname + '../../client/build/index.html'))
 })
 
 app.use((req, res) => {

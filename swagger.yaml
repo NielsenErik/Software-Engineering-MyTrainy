@@ -1,0 +1,1326 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: MyTrainy
+  description: API per usare la piattaforma MyTrainy, progetto di Ingengeria del Software UniTN 2022
+  contact: {}
+host: mytrainy.herokuapp.com
+basePath: /
+securityDefinitions: {}
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+
+  /api/v1/users:
+    post:
+      description: Crea un nuovo utente che può accedere alla piattaforma. In base alla tipologia di utente, egli potrà eseguire tutte le operazioni che gli sono concesse.
+      summary: Registrazione di un nuovo utente
+      operationId: Registrazionediunnuovoutente
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Registrazionediunnuovoutenterequest'
+      responses:
+        '200':
+          description: Utente creato
+          schema:
+            $ref: '#/definitions/Registrazionediunnuovoutenteresponse'
+          examples: 
+            application/json:
+              success: 'true'
+              email: 'user.email'
+              id: 'userId'
+              self: '"api/v1/users" + userId'
+          headers: {}
+        '400':
+          description: 'Ritornato se la richiesta è errata : il parametro email è vuoto o scritto in formato errato.'
+          schema:
+            $ref: '#/definitions/Registrazionediunnuovoutenteresponse1'
+          examples: 
+            application/json: 
+              error: 'The field email must be a non-empty string, in email format'
+          headers: {}
+        '500':
+          description: Ritorna se la email esiste già
+          schema:
+            $ref: '#/definitions/Registrazionediunnuovoutenteresponse2'
+          examples:
+            application/json:
+              error: "'The email already exists'"
+          headers: {}
+          
+  /api/v1/authentications:
+    post:
+      description: >-
+        Fornendo le credenziali utente (email e password), si ottiene il tiken JWT necessario ad usufruire dei servizi autenticati dalla piattaforma.
+        
+        + localStorage
+          + access_token
+      summary: Autenticazione utente
+      operationId: Autenticazioneutente
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: Content-Type
+        in: header
+        required: false
+        enum:
+        - application/json
+        type: string
+        description: ''
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Autenticazioneutenterequest'
+      responses:
+        '200':
+          description: Login avvenuto
+          schema:
+            $ref: '#/definitions/Autenticazioneutenteresponse'
+          examples: 
+            application/json:
+              success: 'true'
+              message: 'Enjoy your token!'
+              token: 'token'
+              email: 'user.email'
+              id: 'user.id'
+              self: 'api/v1/ + user._id'
+          headers: {}
+        '400':
+          description: Ritorna se l'utente non viene trovato
+          schema:
+            $ref: '#/definitions/Autenticazioneutenteresponse1'
+          examples: 
+            application/json: 
+              success: 'false'
+              message: 'Authentication failed. User not found.'
+          headers: {}
+        '401':
+          description: Ritorna se l'utente ha inserito la password sbagliata.
+          schema:
+            $ref: '#/definitions/Autenticazioneutenteresponse2'
+          examples: 
+            application/json: 
+              success: 'false'
+              error: 'Authentication failed. Wrong password.'
+          headers: {}
+          
+  /api/v1/userCards/{userId}:
+    get:
+      description: Richiede al database tutte le schede di allenamento dell'utente autenticato, sfruttando il campo 'userId' negli attributi della scheda, controllando che corrisponda all'id dell'utente.
+      summary: Ritorna tutte le schede di un utente
+      operationId: Ritornatutteleschedediunutente
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        type: string
+        description: id dell'utente
+      responses:
+        '404':
+          description: Ritorna se non vengono trovate schede per l'utente.
+          schema:
+            $ref: '#/definitions/Ritornatutteleschedediunutenteresponse1'
+          examples:
+            application/json:
+              error: 'No card for user with id: + req.params'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Ritornatutteleschedediunutenteresponse'
+          examples: 
+            application/json: 
+              self: '/api/v1/card/ + dbEntry.id'
+              title: 'dbEntry.title'
+              sport: 'dbEntry.sport'
+              date: 'db.Entry.date'
+          headers: {}
+          
+  /api/v2/userCards/{userId}:
+    get:
+      description: Richiede al database tutte le schede di allenamento dell'utente autenticato, sfruttando il campo 'userId' negli attributi della scheda, controllando che corrisponda all'id dell'utente.
+      summary: Ritorna tutte le schede di un utente
+      operationId: Ritornatutteleschedediunutentev2
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        type: string
+        description: id dell'utente
+      responses:
+        '404':
+          description: Ritorna se non vengono trovate schede per l'utente.
+          schema:
+            $ref: '#/definitions/Ritornatutteleschedediunutenteresponse1'
+          examples:
+            application/json:
+              error: 'No card for user with id: + req.params'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Ritornatutteleschedediunutenteresponsev2'
+          examples: 
+            application/json: 
+              self: '/api/v2/card/ + dbEntry.id'
+              id: 'dbEntry.id'
+              title: 'dbEntry.title'
+              sport: 'dbEntry.sport'
+              startDate: 'dbEntry.startDate'
+              endDate: 'dbEntry.endDate'
+              comment: 'dbEntry.comment'
+              color: 'dbEntry.color'
+          headers: {}
+          
+  /api/v1/card/{userId}:
+    post:
+      description: L'utente crea una nuova scheda e viene aggiornato il database.
+      summary: Creazione di una nuova scheda
+      operationId: Creazionediunanuovascheda
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        type: string
+        description: id dello user
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Creazionediunanuovaschedarequest'
+      responses:
+        '500':
+          description: Ritorna se l'utente non è ancora loggato nel sistema.
+          schema:
+            $ref: '#/definitions/Creazionediunanuovaschedaresponse1'
+          examples:
+            application/json:
+              error: "'No logged user yet'"
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Creazionediunanuovaschedaresponse'
+          examples: 
+            application/json: 
+              self: '/api/v1/card/ + dbEntry.id'
+              title: 'dbEntry.title'
+              sport: 'dbEntry.sport'
+              date: 'dbEntry.date'
+          headers: {}
+          
+  /api/v2/card/{userId}:
+    post:
+      description: L'utente crea una nuova scheda e viene aggiornato il database.
+      summary: Creazione di una nuova scheda
+      operationId: Creazionediunanuovaschedav2
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        type: string
+        description: id dello user 
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Creazionediunanuovaschedarequestv2'
+      responses:
+        '500':
+          description: Ritorna se l'utente non è ancora loggato nel sistema.
+          schema:
+            $ref: '#/definitions/Creazionediunanuovaschedaresponse1'
+          examples:
+            application/json:
+              error: "'No logged user yet'"
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Creazionediunanuovaschedaresponsev2'
+          examples: 
+            application/json: 
+              self: '/api/v2/card/ + dbEntry.id'
+              title: 'dbEntry.title'
+              sport: 'dbEntry.sport'
+              startDate: 'newCard.startDate'
+              endDate: 'newCard.endDate'
+              color: 'newCard.color'
+          headers: {}
+          
+  /api/v1/card/{id}:
+    get:
+      description: Richiede al database una scheda specifica selezionata dall'utente.
+      summary: Ritorna una scheda nello specifico
+      operationId: Ritornaunaschedanellospecifico
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id della scheda
+      responses:
+        '404':
+          description: Ritorna se non esiste una card con quello specifico id.
+          schema:
+            $ref: '#/definitions/Ritornaunaschedanellospecificoresponse1'
+          examples:
+            application/json:
+              error: 'No card with id : ${cardID}'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Ritornaunaschedanellospecificoresponse'
+          examples: 
+            application/json:
+              id: 'id'
+              title: 'title'
+              sport: 'sport'
+              date: 'date'
+              comment: 'comment'
+          headers: {}
+    patch:
+      description: L'utente modifica una scheda e viene aggiornato il database.
+      summary: Modifica di una scheda
+      operationId: Modificadiunascheda
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id della scheda
+      responses:
+        '404':
+          description: Ritorna se non esiste una scheda con quel dato id.
+          schema:
+            $ref: '#/definitions/Modificadiunaschedaresponse1'
+          examples:
+            application/json:
+              error: 'No card with id : ${cardID}'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Modificadiunaschedaresponse'
+          examples:
+            application/json:
+              id: 'cardSelected.id'
+              title: 'cardSelected.title'
+              sport: 'cardSelected.sport'
+              date: 'cardSelected.date'
+              comment: 'cardSelected.comment'
+          headers: {}
+    delete:
+      description: L'utente cancella una scheda e viene aggioranto il database.
+      summary: Cancellazione di una scheda
+      operationId: Cancellazionediunascheda
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id della scheda
+      responses:
+        '404':
+          description: Ritorna se non esiste una scheda con quel dato id.
+          schema:
+            $ref: '#/definitions/Cancellazionediunaschedaresponse1'
+          examples:
+            application/json:
+              error: 'No card with id : ${cardID}'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Cancellazionediunaschedaresponse'
+          examples:
+            application/json:
+              id: 'cardSelected.id'
+              title: 'cardSelected.title'
+              sport: 'cardSelected.sport'
+              date: 'cardSelected.date'
+              comment: 'cardSelected.comment'
+          headers: {}
+  
+  /api/v2/card/{id}:
+    get:
+      description: Richiede al database una scheda specifica selezionata dall'utente.
+      summary: Ritorna una scheda nello specifico
+      operationId: Ritornaunaschedanellospecificov2
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id della scheda
+      responses:
+        '404':
+          description: Ritorna se non esiste una card con quello specifico id.
+          schema:
+            $ref: '#/definitions/Ritornaunaschedanellospecificoresponse1'
+          examples:
+            application/json:
+              error: 'No card with id : ${cardID}'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Ritornaunaschedanellospecificoresponsev2'
+          examples: 
+            application/json:
+              id: 'id'
+              title: 'title'
+              sport: 'sport'
+              startDate: 'startDate'
+              endDate: 'endDate'
+              comment: 'comment'
+              color: 'color'
+          headers: {}
+    patch:
+      description: L'utente modifica una scheda e viene aggiornato il database.
+      summary: Modifica di una scheda
+      operationId: Modificadiunaschedav2
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id della scheda
+      responses:
+        '404':
+          description: Ritorna se non esiste una scheda con quel dato id.
+          schema:
+            $ref: '#/definitions/Modificadiunaschedaresponse1'
+          examples:
+            application/json:
+              error: "'No card with id : ${cardID'"
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Modificadiunaschedaresponsev2'
+          examples:
+            application/json:
+              title: 'cardSelected.title'
+              sport: 'cardSelected.sport'
+              startDate: 'cardSelected.startDate'
+              endDate: 'endDate'
+              comment: 'cardSelected.comment'
+              color: 'cardSelected.color'
+          headers: {}
+    delete:
+      description: L'utente cancella una scheda e viene aggioranto il database.
+      summary: Cancellazione di una scheda
+      operationId: Cancellazionediunaschedav2
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id della scheda
+      responses:
+        '404':
+          description: Ritorna se non esiste una scheda con quel dato id.
+          schema:
+            $ref: '#/definitions/Cancellazionediunaschedaresponse1'
+          examples:
+            application/json:
+              error: 'No card with id : ${cardID}'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Cancellazionediunaschedaresponsev2'
+          examples:
+            application/json:
+              id: 'cardSelected.id'
+              title: 'cardSelected.title'
+              sport: 'cardSelected.sport'
+              startDate: 'cardSelected.startDate'
+              endDate: 'endDate'
+              comment: 'cardSelected.comment'
+              color: 'cardSelected.color'
+          headers: {}  
+          
+  /api/v1/userPrograms/{userId}:
+    get:
+      description: Richiede al database tutti i programmi di allenamento dell'utente autenticato, sfruttando il campo 'userId' negli attributi della scheda, controllando che corrisponda all'id dell'utente.
+      summary: Ritorna tutti i programmi di un utente
+      operationId: Ritornatuttiiprogrammidiunutente
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        type: string
+        description: id dell'utente
+      responses:
+        '404':
+          description: Ritorna se non vengono trovati programmi per l'utente.
+          schema:
+            $ref: '#/definitions/Ritornatuttiiprogrammidiunutenteresponse1'
+          examples:
+            application/json:
+              error: 'No program for user with id: + req.params'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Ritornatuttiiprogrammidiunutenteresponse'
+          examples: 
+            application/json: 
+              self: '/api/v1/program/ + dbEntry.id'
+              title: 'dbEntry.title'
+              sport: 'dbEntry.sport'
+          headers: {}
+  
+  /api/v1/program/{userId}: 
+    post:
+      description: L'utente crea un nuovo programma e viene aggiornato il database.
+      summary: Creazione di un nuovo programma
+      operationId: Creazionediunnuovoprogramma
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        type: string
+        description: id dello user 
+      - name: body
+        in: body
+        required: true
+        description: ''
+        schema:
+          $ref: '#/definitions/Creazionediunnuovoprogrammarequest'
+      responses:
+        '500':
+          description: Ritorna se l'utente non è ancora loggato nel sistema.
+          schema:
+            $ref: '#/definitions/Creazionediunnuovoprogrammaresponse1'
+          examples:
+            application/json:
+              error: "'No logged user yet'"
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Creazionediunnuovoprogrammaresponse'
+          examples: 
+            application/json:
+              id: 'id'
+              userId: 'userId'
+              title: 'title'
+              sport: 'sport'
+          headers: {}
+  
+  /api/v1/program/{id}:
+    get:
+      description: Richiede al database un programma specifico selezionato dall'utente.
+      summary: Ritorna un programma nello specifico
+      operationId: Ritornaunprogrammaspecifico
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id del programma
+      responses:
+        '404':
+          description: Ritorna se non esiste un programma con quello specifico id.
+          schema:
+            $ref: '#/definitions/Ritornaunprogrammaspecificoresponse1'
+          examples:
+            application/json:
+              error: 'No program with id : ${cardID}'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Ritornaunprogrammaspecificoresponse'
+          examples: 
+            application/json:
+              id: 'programSelected.id'
+              userId: 'programSelected.userId'
+              title: 'programSelected.title'
+              sport: 'programSelected.sport'
+          headers: {}
+    patch:
+      description: L'utente modifica un programma e viene aggiornato il database.
+      summary: Modifica di un programma
+      operationId: Modificadiunprogramma
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id del programma
+      responses:
+        '404':
+          description: Ritorna se non esiste un programma con quel dato id.
+          schema:
+            $ref: '#/definitions/Modificadiunprogrammaresponse1'
+          examples:
+            application/json:
+              error: 'No program with id : ${programID}'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Modificadiunprogrammaresponse'
+          examples:
+            application/json:
+              id: 'programSelected.id'
+              userId: 'programSelected.userId'
+              title: 'programSelected.title'
+              sport: 'programSelected.sport'
+          headers: {}
+    delete:
+      description: L'utente cancella un programma e viene aggioranto il database.
+      summary: Cancellazione di un programma
+      operationId: Cancellazionediunprogramma
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id del programma
+      responses:
+        '404':
+          description: Ritorna se non esiste un programma con quel dato id.
+          schema:
+            $ref: '#/definitions/Cancellazionediunprogrammaresponse1'
+          examples:
+            application/json:
+              error: 'No program with id : ${programID}'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Cancellazionediunprogrammaresponse'
+          examples:
+            application/json:
+              id: 'programSelected.id'
+              userId: 'programSelected.userId'
+              title: 'programSelected.title'
+              sport: 'programSelected.sport'
+          headers: {}
+          
+          
+          
+definitions:
+
+  Registrazionediunnuovoutenterequest:
+    title: Registrazionediunnuovoutenterequest
+    type: object
+    properties:
+      email:
+        description: Email dell'utente
+        type: string
+      password:
+        description: Password scelta dall'utente
+        type: string
+      userType:
+        description: Tipologia di utente da selezionare
+        type: string
+    required:
+    - email
+    - password
+    - userType
+  Registrazionediunnuovoutenteresponse: 
+    title: Registrazionediunnuovoutenteresponse
+    example: 
+      success: 'true'
+      email: 'user.email'
+      id: 'userId'
+      self: '"api/v1/users" + userId'
+    type: object
+    properties: 
+      success:
+        type: string
+      email: 
+        type: string
+      id:
+        type: string
+      self: 
+        type: string
+  Registrazionediunnuovoutenteresponse1:
+    title: Registrazionediunnuovoutenteresponse
+    example:
+      error: 'The field email must be a non-empty string, in email format'
+    type: object
+    properties:
+      error:
+        type: string
+    required:
+    - error
+  Registrazionediunnuovoutenteresponse2: 
+    title: Registrazionediunnuovoutenteresponse
+    example:
+      error: "The email already exists"
+    type: object
+    properties:
+      error:
+        type: string
+    required:
+    - error
+    
+  Autenticazioneutenterequest: 
+    title: Autenticazioneutenterequest
+    type: object
+    properties:
+      email:
+        description: Email dell'utente
+        type: string
+      password:
+        description: Password scelta dall'utente
+        type: string
+    required:
+      - email
+      - password
+  Autenticazioneutenteresponse: 
+    title: Autenticazioneutenteresponse
+    example: 
+      success: 'true'
+      message: 'Enjoy your token!'
+      token: 'token'
+      email: 'user.email'
+      id: 'user.id'
+      self: 'api/v1/ + user._id'
+    type: object
+    properties: 
+      success: 
+        type: string
+      message: 
+        type: string
+      token: 
+        type: string
+      email: 
+        type: string
+      id: 
+        type: string
+      self: 
+        type: string
+  Autenticazioneutenteresponse1: 
+    title: Autenticazioneutenteresponse1
+    example: 
+      success: 'false'
+      message: 'Authentication failed. User not found.'
+    type: object
+    properties: 
+      success: 
+        type: string
+      message: 
+        type: string
+    required: 
+      - message
+  Autenticazioneutenteresponse2: 
+    title: Autenticazioneutenteresponse2
+    example: 
+      success: 'false'
+      message: 'Authentication failed. Wrong password'
+    type: object
+    properties: 
+      success: 
+        type: string
+      message: 
+        type: string
+    required: 
+      - message
+      
+  Ritornatutteleschedediunutenteresponse1:
+    title: Ritornatutteleschedediunutenteresponse1
+    example:
+      error: 'No card for user with id: + req.params'
+    type: object
+    properties:
+      error:
+        type: string
+    required:
+    - error
+  Ritornatutteleschedediunutenteresponse:  
+    title: Ritornatutteleschedediunutenteresponse
+    example:
+      self: api/v1/card/ + dbEntry.id
+      title: dbEntry.title
+      sport: dbEntry.sport
+      date: dbEntry.date
+    type: object
+    properties:
+      self: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+      date: 
+        type: string
+  Ritornatutteleschedediunutenteresponsev2:  
+    title: Ritornatutteleschedediunutenteresponse
+    example:
+      self: 'api/v2/card/ + dbEntry.id'
+      id: 'dbEntry.id'
+      title: 'dbEntry.title'
+      sport: 'dbEntry.sport'
+      startDate: 'dbEntry.startDate'
+      endDate: 'dbEntry.endDate'
+      comment: 'dbEntry.comment'
+      color: 'dbEntry.color'
+    type: object
+    properties: 
+      self: 
+        type: string
+      id: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+      startDate:
+        type: string
+      endDate:
+        type: string
+      comment: 
+        type: string
+      color: 
+        type: string
+  
+  Creazionediunanuovaschedarequest:
+    title: Creazionediunanuovaschedarequest
+    type: object
+    properties:
+      userId:
+        description: Id dell'utente
+        type: string
+      title:
+        description: Titolo della scheda
+        type: string
+      sport:
+        description: Tipologia della scheda
+        type: string
+      date:
+        description: Data
+        type: string
+      comment:
+        description: Commento
+        type: string
+    required:
+    - userId
+    - title
+    - sport
+    - date
+  Creazionediunanuovaschedarequestv2:
+    title: Creazionediunanuovaschedarequestv2
+    type: object
+    properties:
+      userId:
+        description: Id dell'utente
+        type: string
+      title:
+        description: Titolo della scheda
+        type: string
+      sport:
+        description: Tipologia della scheda
+        type: string
+      startDate:
+        description: Data d'inizio
+        type: string
+        format: date 
+      endDate: 
+        description: Data di fine
+        type: string
+        format: date 
+      comment:
+        description: Commento
+        type: string
+      color: 
+        description: Colore
+        type: string
+    required:
+    - userId
+    - title
+    - sport
+    - startDate
+    - endDate
+  Creazionediunanuovaschedaresponse:
+    title: Creazionediunanuovaschedaresponse
+    example:
+      self: '/api/v1/card/ + dbEntry.id'
+      title: 'dbEntry.title'
+      sport: 'dbEntry.sport'
+      date: 'dbEntry.date'
+    type: object
+    properties:
+      self:
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+      date: 
+        type: string
+  Creazionediunanuovaschedaresponsev2:
+    title: Creazionediunanuovaschedaresponsev2
+    example:
+      self: '/api/v2/card/ + newCard.id'
+      title: 'newCard.title'
+      sport: 'newCard.sport'
+      startDate: 'newCard.startDate'
+      endDate: 'newCard.endDate'
+      color: 'newCard.color'
+    type: object
+    properties:
+      self: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+      startDate: 
+        type: string
+      endDate: 
+        type: string
+      color: 
+        type: string
+  Creazionediunanuovaschedaresponse1:
+    title: Creazionediunanuovaschedaresponse1
+    example:
+      error: "'No logged user yet'"
+    type: object
+    properties:
+      error:
+        type: string
+    required:
+    - error
+    
+  Ritornaunaschedanellospecificoresponse:
+    title: Ritornaunaschedanellospecificoresponse
+    example:
+      id: 'id'
+      title: 'title'
+      sport: 'sport'
+      date: 'date'
+      comment: 'comment'
+    type: object
+    properties:
+      id: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+      date: 
+        type: string
+      comment: 
+        type: string
+  Ritornaunaschedanellospecificoresponsev2:
+    title: Ritornaunaschedanellospecificoresponsev2
+    example:
+      id: 'id'
+      title: 'title'
+      sport: 'sport'
+      startDate: 'startDate'
+      endDate: 'endDate'
+      comment: 'comment'
+      color: 'color'
+    type: object
+    properties:
+      id: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+      startDate: 
+        type: string
+        format: date
+      endDate: 
+        type: string
+        format: date
+      comment: 
+        type: string
+      color: 
+        type: string
+  Ritornaunaschedanellospecificoresponse1:
+    title: Ritornaunaschedanellospecificoresponse
+    example:
+      error: 'No card with id : ${cardID}'
+    type: object
+    properties:
+      error:
+        type: string
+    required:
+    - error
+    
+    
+  Modificadiunaschedaresponse1:
+    title: Modificadiunaschedaresponse1
+    example:
+      error: 'No card with id : ${cardID}'
+    type: object
+    properties:
+      error:
+        type: string
+    required:
+    - error
+  Modificadiunaschedaresponse:
+    title: Modificadiunaschedaresponse
+    example:
+      id: 'cardSelected.id'
+      title: 'cardSelected.title'
+      sport: 'cardSelected.sport'
+      date: 'cardSelected.date'
+      comment: 'cardSelected.comment'
+    type: object
+    properties:
+      id: 
+        type: string
+      title:
+        type: string
+      sport: 
+        type: string
+      date: 
+        type: string
+      comment: 
+        type: string
+  Modificadiunaschedaresponsev2:
+    title: Modificadiunaschedaresponsev2
+    example: 
+      title: 'cardSelected.title'
+      sport: 'cardSelected.sport'
+      startDate: 'cardSelected.startDate'
+      endDate: 'cardSelected.endDate'
+      comment: 'cardSelected.comment'
+      color: 'cardSelected.color'
+    type: object
+    properties: 
+      title: 
+        type: string
+      sport: 
+        type: string
+      startDate: 
+        type: string
+        format: date 
+      endDate:
+        type: string
+        format: date
+      comment: 
+        type: string
+      color: 
+        type: string
+    
+  Cancellazionediunaschedaresponse1:
+    title: Cancellazionediunaschedaresponse1
+    example:
+      error: 'No card with id : ${cardID}'
+    type: object
+    properties:
+      error:
+        type: string
+    required:
+    - error
+  Cancellazionediunaschedaresponse:
+    title: Cancellazionediunaschedaresponse
+    example: 
+      id: 'cardSelected.id'
+      title: 'cardSelected.title'
+      sport: 'cardSelected.sport'
+      date: 'cardSelected.date'
+      comment: 'cardSelected.comment'
+    type: object 
+    properties: 
+      id: 
+        type: string
+      title:
+        type: string
+      sport: 
+        type: string
+      date: 
+        type: string
+      comment: 
+        type: string
+  Cancellazionediunaschedaresponsev2:
+    title: Cancellazionediunaschedaresponsev2 
+    example: 
+      id: 'cardSelected.id'
+      title: 'cardSelected.title'
+      sport: 'cardSelected.sport'
+      startDate: 'cardSelected.startDate'
+      endDate: 'cardSelected.endDate'
+      comment: 'cardSelected.comment'
+      color: 'cardSelected.color'
+    type: object 
+    properties: 
+      id: 
+        type: string
+      title:
+        type: string
+      sport: 
+        type: string
+      startDate: 
+        type: string
+        format: date
+      endDate: 
+        type: string
+        format: date
+      comment: 
+        type: string
+      color: 
+        type: string
+        
+  Ritornatuttiiprogrammidiunutenteresponse: 
+    title: Ritornatuttiiprogrammidiunutenteresponse
+    example: 
+      self: '/api/v1/program/ + dbEntry.id'
+      title: 'dbEntry.title'
+      sport: 'dbEntry.sport'
+    type: object
+    properties: 
+      self: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+  Ritornatuttiiprogrammidiunutenteresponse1: 
+    title: Ritornatuttiiprogrammidiunutenteresponse1
+    example: 
+      error: 'No program for user with id: + req.params'
+    type: object
+    properties: 
+      error: 
+        type: string
+    required: 
+      - error
+      
+  Creazionediunnuovoprogrammarequest: 
+    title: Creazionediunnuovoprogrammarequest
+    properties: 
+      userId: 
+        description: id dell'utente
+        type: string
+      title: 
+        description: titolo 
+        type: string
+      sport: 
+        description: sport
+        type: string
+    required: 
+      - userId
+      - title
+      - sport
+  Creazionediunnuovoprogrammaresponse: 
+    title: Creazionediunnuovoprogrammaresponse
+    example: 
+      id: 'id'
+      userId: 'userId'
+      title: 'title'
+      sport: 'sport'
+    type: object
+    properties: 
+      id: 
+        type: string
+      userId: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+  Creazionediunnuovoprogrammaresponse1: 
+    title: Creazionediunnuovoprogrammaresponse1
+    example: 
+      error: 'No logged user yet'
+    type: object
+    properties: 
+      error: 
+        type: string
+    required: 
+      - error
+      
+  Ritornaunprogrammaspecificoresponse: 
+    title: Ritornaunprogrammaspecificoresponse
+    example: 
+      id: 'programSelected.id'
+      userId: 'programSelected.userId'
+      title: 'programSelected.title'
+      sport: 'programSelected.sport'
+    type: object
+    properties: 
+      id: 
+        type: string
+      userId: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+  Ritornaunprogrammaspecificoresponse1:
+    title: Ritornaunprogrammaspecificoresponse1
+    example: 
+      error: 'No program with id: ${programID}'
+    type: object
+    properties: 
+      error: 
+        type: string
+    required: 
+      - error
+      
+  Modificadiunprogrammaresponse: 
+    title: Modificadiunprogrammaresponse
+    example: 
+      id: 'programSelected.id'
+      userId: 'programSelected.userId'
+      title: 'programSelected.title'
+      sport: 'programSelected.sport'  
+    type: object 
+    properties: 
+      id: 
+        type: string
+      userId: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+  Modificadiunprogrammaresponse1: 
+    title: Modificadiunprogrammaresponse1
+    example: 
+      error: 'No program with id: ${programID}'
+    type: object
+    properties: 
+      error: 
+        type: string
+    required: 
+      - error
+  
+  Cancellazionediunprogrammaresponse: 
+    title: Cancellazionediunprogrammaresponse
+    example: 
+      id: 'programSelected.id'
+      userId: 'programSelected.userId'
+      title: 'programSelected.title'
+      sport: 'programSelected.sport'
+    type: object
+    properties: 
+      id: 
+        type: string
+      userId: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+  Cancellazionediunprogrammaresponse1: 
+    title: Cancellazionediunprogrammaresponse1
+    example: 
+      error: 'No program with id: ${programID}'
+    type: object
+    properties: 
+      error: 
+        type: string
+    required: 
+      - error
+      
+      
+    
+tags: []

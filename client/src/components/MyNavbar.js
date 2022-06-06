@@ -60,13 +60,13 @@ const MyNavbar = () =>{
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="ms-auto">
                     <Link to="/prog-card-dash">
-                        <Nav.Link href="#">Programmi</Nav.Link>
+                        <Nav.Link href="#def">Programmi</Nav.Link>
                     </Link>
                     <Link to="/courses">
-                        <Nav.Link href="#">Corsi</Nav.Link>
+                        <Nav.Link href="#def">Corsi</Nav.Link>
                     </Link>
                     <Link to="/diary">
-                        <Nav.Link href="#">Diario</Nav.Link>
+                        <Nav.Link href="#def">Diario</Nav.Link>
                     </Link>
                     <NavDropdown title="Profilo" id="collasible-nav-dropdown">
                         <NavDropdown.Item style={{cursor: "text"}}>

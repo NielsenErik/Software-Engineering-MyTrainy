@@ -11,7 +11,7 @@ const NavPreLog = () =>{
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ms-auto">
                         <Link to="/">
-                            <Nav.Link to="#">About Us</Nav.Link>
+                            <Nav.Link to="#def">About Us</Nav.Link>
                         </Link>
                         <div style={{paddingRight:"1rem"}}>
                             <Link id="login" to="/login"><Button className="text-light">Accedi</Button></Link>

@@ -11,10 +11,10 @@ const NavPreReg = () =>{
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="ms-auto">
                         <Link to="/info">
-                            <Nav.Link href="#">info su MyTrainy</Nav.Link>
+                            <Nav.Link href="#def">info su MyTrainy</Nav.Link>
                         </Link>
                         <Link to = "/about">
-                            <Nav.Link href="#">About Us</Nav.Link>
+                            <Nav.Link href="#def">About Us</Nav.Link>
                         </Link>
 
                     </Nav>

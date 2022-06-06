@@ -787,6 +787,114 @@ paths:
               comment: 'newCourse.comment'
           headers: {}  
           
+  /api/v1/course/{id}:
+    get:
+      description: Richiede al database un corso specifico selezionato dall'utente.
+      summary: Ritorna un corso nello specifico
+      operationId: Ritornauncorsospecifico
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id del corso
+      responses:
+        '404':
+          description: Ritorna se non esiste un corso con quello specifico id.
+          schema:
+            $ref: '#/definitions/Ritornauncorsospecificoresponse1'
+          examples:
+            application/json:
+              error: 'No course with id : ${courseID}'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Ritornauncorsospecificoresponse'
+          examples: 
+            application/json:
+              id: 'courseSelected.id'
+              userId: 'courseSelected.userId'
+              title: 'courseSelected.title'
+              sport: 'courseSelected.sport'
+              comment: 'courseSelected.comment'
+          headers: {}
+    patch:
+      description: L'utente modifica un corso e viene aggiornato il database.
+      summary: Modifica di un corso
+      operationId: Modificadiuncorso
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id del corso
+      responses:
+        '404':
+          description: Ritorna se non esiste un corso con quel dato id.
+          schema:
+            $ref: '#/definitions/Modificadiuncorsoresponse1'
+          examples:
+            application/json:
+              error: 'No course with id : ${courseID}'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Modificadiuncorsoresponse'
+          examples:
+            application/json:
+              title: 'courseSelected.title'
+              sport: 'courseSelected.sport'
+              comment: 'courseSelected.comment' 
+          headers: {}
+    delete:
+      description: L'utente cancella un corso e viene aggioranto il database.
+      summary: Cancellazione di un corso
+      operationId: Cancellazionediuncorso
+      deprecated: false
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: id del corso
+      responses:
+        '404':
+          description: Ritorna se non esiste un corso con quel dato id.
+          schema:
+            $ref: '#/definitions/Cancellazionediuncorsoresponse1'
+          examples:
+            application/json:
+              error: 'No course with id : ${courseID}'
+          headers: {}
+        '200':
+          description: Query a buon fine
+          schema:
+            $ref: '#/definitions/Cancellazionediunprogrammaresponse'
+          examples:
+            application/json:
+              id: 'courseSelected.id'
+              userId: 'courseSelected.userId'
+              title: 'courseSelected.title'
+              sport: 'courseSelected.sport'
+              comment: 'courseSelected.comment'
+          headers: {}
+          
           
 definitions:
 
@@ -1473,7 +1581,93 @@ definitions:
         type: string
     required: 
       - error
-      
+  
+  Ritornauncorsospecificoresponse: 
+    title: Ritornauncorsospecificoresponse
+    example: 
+      id: 'courseSelected.id'
+      userId: 'courseSelected.userId'
+      title: 'courseSelected.title'
+      sport: 'courseSelected.sport'
+      comment: 'courseSelected.comment'
+    type: object
+    properties: 
+      id: 
+        type: string
+      userId: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+      comment: 
+        type: string
+  Ritornauncorsospecificoresponse1: 
+    title: Ritornauncorsospecificoresponse1
+    example: 
+      error: 'No course with id: ${courseID}'
+    type: object
+    properties: 
+      error: 
+        type: string
+    required: 
+      - error
+  
+  Modificadiuncorsoresponse: 
+    title: Modificadiuncorsoresponse
+    example: 
+      title: 'courseSelected.title'
+      sport: 'courseSelected.sport'
+      comment: 'courseSelected.comment'
+    type: object
+    properties: 
+      title: 
+        type: string
+      sport: 
+        type: string
+      comment: 
+        type: string
+  Modificadiuncorsoresponse1: 
+    title: Modificadiuncorsoresponse1
+    example: 
+      error: 'No course with id: ${courseID}'
+    type: object 
+    properties: 
+      error:  
+        type: string
+    required: 
+      - error
+  
+  Cancellazionediuncorsoresponse: 
+    title: Cancellazionediuncorsoresponse
+    example: 
+      id: 'courseSelected.id'
+      userId: 'courseSelected.userId'
+      title: 'courseSelected.title'
+      sport: 'courseSelected.sport'
+      comment: 'courseSelected.comment'
+    type: object
+    properties: 
+      id: 
+        type: string
+      userId: 
+        type: string
+      title: 
+        type: string
+      sport: 
+        type: string
+      comment: 
+        type: string
+  Cancellazionediuncorsoresponse1: 
+    title: Cancellazionediuncorsoresponse1
+    example: 
+      error: 'No course with id: ${courseID}'
+    type: object
+    properties: 
+      error: 
+        type: string
+    required: 
+      - error 
       
     
 tags: []

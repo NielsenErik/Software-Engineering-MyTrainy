@@ -23,7 +23,7 @@ const MyNavbar = () =>{
     const handleShow = () => setShow(true);
 
     useEffect(() =>{
-        fetch('http://localhost:3000/api/v1/users/'+user,{
+        fetch('/api/v1/users/'+user,{
             method: 'GET',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(),

@@ -28,7 +28,7 @@ const CoursesPage = () =>{
     const createCourse = (e) =>{
         e.preventDefault()
 
-        fetch(`http://localhost:3000/api/v1/course/${user}`, {
+        fetch(`/api/v1/course/${user}`, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -49,7 +49,7 @@ const CoursesPage = () =>{
     }
 
     useEffect(() =>{
-        fetch(`http://localhost:3000/api/v1/userCourses/${user}`,{
+        fetch(`/api/v1/userCourses/${user}`,{
             method: "GET",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(),

@@ -68,7 +68,7 @@ const Sidebar = ({userCards, setUserCards, userPrograms, setUserPrograms}) =>{
     const addCardHandler = (e) =>{
         // console.log("dentro addHandler")
         e.preventDefault()
-        fetch('http://localhost:3000/api/v1/card/'+user, {
+        fetch('/api/v1/card/'+user, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify( { userId: user, title: titleCard, sport: sport, startDate: newStartDate, endDate: newEndDate,  comment: comment, color: newColor,} ),
@@ -93,7 +93,7 @@ const Sidebar = ({userCards, setUserCards, userPrograms, setUserPrograms}) =>{
     const addProgramHandler = (e) =>{
         e.preventDefault()
         // alert("Create Program")
-        fetch('http://localhost:3000/api/v1/program/'+user, {
+        fetch('/api/v1/program/'+user, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({userId: user, title: titleProgram, sport: programSport, color: newProgramColor, comment: programComment})

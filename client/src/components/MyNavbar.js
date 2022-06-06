@@ -50,12 +50,14 @@ const MyNavbar = () =>{
         <Navbar collapseOnSelect expand="lg" bg="light" variant="light">
             <Container>
             {/* <Navbar.Brand href="/calendar">MyTrainy</Navbar.Brand> */}
-            <Navbar.Brand href="/calendar">
-                <img src={logo} alt="logo" style={{
-                    maxWidth: "50%",
-                    maxHeight: "50%"
-                }}/>
-            </Navbar.Brand>
+            <Link to="/calendar">
+                <Navbar.Brand href="#def">
+                    <img src={logo} alt="logo" style={{
+                        maxWidth: "50%",
+                        maxHeight: "50%"
+                    }}/>
+                </Navbar.Brand>
+            </Link>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="ms-auto">

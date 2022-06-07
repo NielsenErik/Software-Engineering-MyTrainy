@@ -49,7 +49,7 @@ router.post('', async (req, res) => {
 
     if (checkEmail){
         console.log('The email already exists')
-        res.status(400).json({ error: 'The email already exists' });
+        res.status(500).json({ error: 'The email already exists' });
         return;
     }
     

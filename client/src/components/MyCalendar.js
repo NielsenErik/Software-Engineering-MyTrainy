@@ -135,7 +135,7 @@ const MyCalendar = ({userCards}) => {
         // onDrillDown={}
         onDoubleClickEvent={(e) =>{
           // console.log(e)
-          fetch('../api/v1/card/'+e.id, {
+          fetch('../api/v2/card/'+e.id, {
             method: "GET",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(),

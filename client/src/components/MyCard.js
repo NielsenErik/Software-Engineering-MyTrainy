@@ -24,7 +24,7 @@ const MyCard = ({eventKey, obj, type, counter, setUserCards}) =>{
     // Aggiornare la Card
     const updateCard = (e) =>{
         e.preventDefault()
-        fetch('http://localhost:3000/api/v1/card/'+obj.id, {
+        fetch('../api/v2/card/'+obj.id, {
             method: "PATCH",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

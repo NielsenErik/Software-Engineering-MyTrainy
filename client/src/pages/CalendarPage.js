@@ -29,7 +29,7 @@ const CalendarPage = ({token}) =>{
 
     useEffect(() =>{
         // console.log("Use Effect activated");
-        fetch("http://localhost:3000/api/v1/users/me?token="+userToken)
+        fetch("../api/v1/users/me?token="+userToken)
         .then(resp => resp.json())
         .then(data => {
             // console.log(data);
@@ -40,7 +40,7 @@ const CalendarPage = ({token}) =>{
         })
         .catch((error) => {console.log("Errore richiesta token");console.log(error)})
         // Get all User's cards
-        fetch(`http://localhost:3000/api/v1/userCards/${user}`, {
+        fetch(`../api/v2/userCards/${user}`, {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(),

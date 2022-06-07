@@ -33,7 +33,7 @@ const RegistrationPage = ({loggedUser, setLoggedUser, setToken, setPage}) =>{
     const [userValue, setUserValue] = useState('1');
     const userType = [
         { name: 'Athlete', value: '1' },
-        { name: 'Allenatore', value: '2' },
+        { name: 'Trainer', value: '2' },
     ];
     // Sport options
     const sportOptions = [
@@ -57,7 +57,7 @@ const RegistrationPage = ({loggedUser, setLoggedUser, setToken, setPage}) =>{
             return ;
         }
 
-        fetch('http://localhost:3000/api/v1/users', {
+        fetch('../api/v1/users', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify( { email: email, password: password, userType: userType[0].name } ),

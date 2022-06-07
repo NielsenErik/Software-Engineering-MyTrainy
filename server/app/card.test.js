@@ -3,7 +3,7 @@ const jwt     = require('jsonwebtoken'); // used to create, sign, and verify tok
 const app     = require('./app');
 const mongoose = require('mongoose');
 
-describe('GET /api/v1/card', () =>{
+describe('GET /api/v2/card', () =>{
     let connection;
 
     beforeAll( async () => {
@@ -18,15 +18,15 @@ describe('GET /api/v1/card', () =>{
         mongoose.connection.close(true);
         console.log("Database connection closed");
     });
-    test('GET /api/v1/card/:id should respond with json', async () => {
+    test('GET /api/v2/card/:id should respond with json', async () => {
         return request(app)
-          .get('/api/v1/card/6298d677fc4cdf93c325d823')
+          .get('/api/v2/card/6298d677fc4cdf93c325d823')
           .expect('Content-Type', /json/)
           .expect(200);
       });
-    test('GET /api/v1/card/ should respond with 404', async () => {
+    test('GET /api/v2/card/ should respond with 404', async () => {
         return request(app)
-          .get('/api/v1/card/')
+          .get('/api/v2/card/')
           .expect(404);
       });
     });

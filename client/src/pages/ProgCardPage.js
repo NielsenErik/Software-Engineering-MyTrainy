@@ -19,7 +19,7 @@ const ProgCardPage = () => {
 
     useEffect(() =>{
 
-        fetch('../api/v1/userCards/'+user, {
+        fetch('../api/v2/userCards/'+user, {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(),

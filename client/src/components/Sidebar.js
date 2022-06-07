@@ -68,7 +68,7 @@ const Sidebar = ({userCards, setUserCards, userPrograms, setUserPrograms}) =>{
     const addCardHandler = (e) =>{
         // console.log("dentro addHandler")
         e.preventDefault()
-        fetch('../api/v1/card/'+user, {
+        fetch('../api/v2/card/'+user, {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify( { userId: user, title: titleCard, sport: sport, startDate: newStartDate, endDate: newEndDate,  comment: comment, color: newColor,} ),

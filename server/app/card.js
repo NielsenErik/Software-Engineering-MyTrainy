@@ -32,7 +32,7 @@ router.post('/:userId', async (req, res, next) =>{
     res.status(200).json(newCard);
 
         return {
-            self: '/api/v1/card/' + newCard.id,
+            self: '/api/v2/card/' + newCard.id,
             title: newCard.title,
             sport: newCard.sport,
             startDate: newCard.startDate,
